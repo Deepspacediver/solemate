@@ -1,0 +1,1 @@
+[Inventory application](https://www.theodinproject.com/lessons/node-path-nodejs-inventory-application) from The Odin Project
