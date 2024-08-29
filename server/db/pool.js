@@ -1,3 +1,9 @@
-const {Pool} = require('pg');
+import pg from 'pg';
 
-module.exports = new Pool;
+const {Pool} = pg;
+
+const pool = new Pool();
+
+export const query = async (text, params, callback) => {
+    return await pool.query(text, params, callback);
+};

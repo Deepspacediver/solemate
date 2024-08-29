@@ -1,12 +1,16 @@
-const express = require('express');
-const cors = require('cors');
+import 'dotenv/config';
+import express from 'express';
+import cors from 'cors';
+import categoriesRouter from "./routes/categories.js";
 
 const corsOptions = {
-    origin:['http://localhost:5173'],
-}
+    origin: ['http://localhost:5173'],
+};
 
 const app = express();
 app.use(cors(corsOptions));
+
+app.use('/categories', categoriesRouter);
 
 const PORT = process.env.PORT || 5001;
 

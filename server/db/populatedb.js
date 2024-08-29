@@ -1,6 +1,8 @@
-require('dotenv').config();
+import 'dotenv/config';
+import pg from 'pg';
 
-const {Client} = require('pg');
+const {Client} = pg;
+
 
 const SQL = ` CREATE TABLE IF NOT EXISTS shoes (
         shoe_id INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
