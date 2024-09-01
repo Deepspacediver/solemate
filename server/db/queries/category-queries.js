@@ -34,3 +34,11 @@ export const removeCategory = async (categoryId) => {
     const allCategories = await db.query('SELECT * FROM categories');
     return allCategories.rows;
 };
+
+export const getShoesWithoutCategories = async () => {
+    const {rows} = await db.query(`SELECT DISTINCT shoes.shoe_id, shoes.picture, shoes.name
+            FROM shoes LEFT JOIN shoes_with_categories AS shoe_cat 
+            ON shoes.shoe_id = shoe_cat.shoe_id WHERE shoe_cat.category_id IS NULL`);
+    return rows;
+
+};

@@ -53,3 +53,8 @@ export const categoryRemoveDelete = asyncHandler(async (req, res) => {
 
 });
 
+export const shoesWithoutCategoriesGet = asyncHandler(async (req, res) => {
+    const data = await db.getShoesWithoutCategories();
+    res.json(data);
+});
+

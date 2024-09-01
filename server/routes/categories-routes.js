@@ -2,6 +2,7 @@ import {Router} from 'express';
 import * as categoriesController
     from "../controllers/categories-controllers.js";
 
+
 const categoriesRouter = new Router();
 
 categoriesRouter.get('/', categoriesController.categoriesGet)
@@ -11,6 +12,7 @@ categoriesRouter.get('/', categoriesController.categoriesGet)
         '/:categoryId', categoriesController.categoryUpdatePost)
     .get(
         '/:categoryId', categoriesController.shoesWithCategoryGet)
+    .get('/categoryless/list', categoriesController.shoesWithoutCategoriesGet)
     .delete(
         '/:categoryId',
         categoriesController.categoryRemoveDelete);
