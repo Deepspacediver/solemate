@@ -48,8 +48,8 @@ export const categoryRemoveDelete = asyncHandler(async (req, res) => {
     parseRequestZod(categoryDeletionSchema, req);
     const {categoryId} = req.body;
 
-    const remaininigCategories = await db.removeCategory(categoryId);
-    res.json(remaininigCategories);
+    const remainingCategories = await db.removeCategory(categoryId);
+    res.json(remainingCategories);
 
 });
 
