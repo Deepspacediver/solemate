@@ -1,8 +1,5 @@
-import {z, ZodError} from 'zod';
-import {BadRequestError} from "../partials/custom-error.js";
-
-
-export const zParse = (schema, req) => {
+export const parseRequestZod = (schema, req) => {
+    console.log(req.params);
     schema.parse({
         body: req.body,
         params: req.params,
