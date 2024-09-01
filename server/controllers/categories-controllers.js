@@ -1,32 +1,31 @@
 import asyncHandler from "express-async-handler";
 import * as db from "../db/queries/category-queries.js";
-import {z} from 'zod';
-import {zParse} from "../helpers/schema-parser.js";
+import {parseRequestZod} from "../helpers/schema-parser.js";
+import {
+    categoryCreationSchema, categoryDeletionSchema,
+    categoryUpdateSchema, shoesWithCategorySchema
+} from "../schema/category-schema.js";
 
 
-const categoriesGet = asyncHandler(async (req, res) => {
+export const categoriesGet = asyncHandler(async (req, res) => {
     const rows = await db.getCategories();
     res.json(rows);
 });
 
 
-const categoryUpdateSchema = z.object({
-    body: z.object(
-        {
-            categoryId: z.number(
-                {message: 'Category id must be a number'}),
-            name: z.string({message: 'Name cannot be empty'}).trim(),
-            picture: z.string({message: 'Picture cannot be empty'}).url(
-                {message: 'Picture must be a link'}).trim(),
+export const categoryCreatePost = asyncHandler(async (req, res) => {
+    parseRequestZod(categoryCreationSchema, req);
 
-        }
-    )
+    const {picture, name} = req.body;
+
+    const createdCategory = await db.createCategory({picture, name});
+    res.json(createdCategory);
 });
 
-const categoryUpdatePost =
-    asyncHandler(async (req, res) => {
-        zParse(categoryUpdateSchema, req);
 
+export const categoryUpdatePost =
+    asyncHandler(async (req, res) => {
+        parseRequestZod(categoryUpdateSchema, req);
         const {categoryId} = req.params;
         const {picture, name} = req.body;
 
@@ -36,8 +35,21 @@ const categoryUpdatePost =
         res.json(updatedCategory);
     });
 
+export const shoesWithCategoryGet = asyncHandler(async (req, res) => {
+    parseRequestZod(shoesWithCategorySchema, req);
 
-export {
-    categoriesGet,
-    categoryUpdatePost
-};
+    const {categoryId} = req.params;
+
+    const shoesWithCategory = await db.getShoesFromCategory(categoryId);
+    res.json(shoesWithCategory);
+});
+
+export const categoryRemoveDelete = asyncHandler(async (req, res) => {
+    parseRequestZod(categoryDeletionSchema, req);
+    const {categoryId} = req.body;
+
+    const remaininigCategories = await db.removeCategory(categoryId);
+    res.json(remaininigCategories);
+
+});
+
