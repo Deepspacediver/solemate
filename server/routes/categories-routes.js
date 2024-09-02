@@ -7,7 +7,7 @@ const categoriesRouter = new Router();
 
 categoriesRouter.get('/', categoriesController.categoriesGet)
     .post(
-        '/:categoryId', categoriesController.categoryCreatePost)
+        '/category/add', categoriesController.categoryCreatePost)
     .put(
         '/:categoryId', categoriesController.categoryUpdatePost)
     .get(
