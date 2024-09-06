@@ -1,13 +1,13 @@
 import axiosClient from "@/services/index.ts";
-import {CategoryType, CreateCategoryType} from "@/types/category-types.ts";
+import {CategoryAPIType, CategoryType, CreateCategoryType} from "@/types/category-types.ts";
 
 enum CategoryRoutes {
     CATEGORIES = "/categories",
     WITHOUT_CATEGORY = '/categoryless/list'
 }
 
-export const getAllCategories = async () => {
-    const {data} = await axiosClient.get(CategoryRoutes.CATEGORIES);
+export const getAllCategories = async (signal: AbortSignal) => {
+    const {data} = await axiosClient.get<CategoryAPIType[]>(CategoryRoutes.CATEGORIES, {signal});
     return data;
 };
 
@@ -16,8 +16,8 @@ export const createCategory = async ({name, picture, description}: CreateCategor
     return data;
 };
 
-export const updateCategory = async ({name, picture, description, category_id}: CategoryType) => {
-    const {data} = await axiosClient.put(`${CategoryRoutes.CATEGORIES}/:${category_id}`, {
+export const updateCategory = async ({name, picture, description, categoryId}: CategoryType) => {
+    const {data} = await axiosClient.put(`${CategoryRoutes.CATEGORIES}/:${categoryId}`, {
         name,
         picture,
         description,

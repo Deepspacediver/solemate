@@ -2,6 +2,10 @@ export type CategoryType = {
     name: string,
     picture: string,
     description?: string
+    categoryId: number
+}
+
+export type CategoryAPIType = Omit<CategoryType, 'categoryId'> & {
     category_id: number
 }
 
