@@ -1,0 +1,38 @@
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px;
+  background-color: var(--col-secondary);
+
+  &__heading {
+    font-size: 1.7rem;
+    font-style: italic;
+  }
+
+  &__link-container {
+    display: flex;
+    gap: 4px;
+  }
+
+  &__link {
+    font-size: 15px;
+    position: relative;
+
+    &::after {
+      position: absolute;
+      content: '';
+      display: block;
+      width: 100%;
+      height: 1.5px;
+      background-color: var(--col-primary);
+      transform: scale(0);
+      transform-origin: left;
+      transition: 300ms transform ease-in;
+    }
+
+    &.active::after {
+      transform: scale(1);
+    }
+  }
+}
