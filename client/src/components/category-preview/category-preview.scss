@@ -1,0 +1,35 @@
+.category-preview {
+  background-color: var(--col-light-beige);
+  max-width: 280px;
+  height: 350px;
+  overflow: hidden;
+  border-radius: 10px;
+  box-shadow: 2px -1px 24px -9px rgba(66, 68, 90, 1);
+  display: flex;
+
+  &__link {
+    display: flex;
+    flex-direction: column;
+    text-decoration: none;
+    color: var(--col-primary);
+  }
+
+  &__info-wrap {
+    background-color: var(--col-white);
+    padding: 5px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    //flex-basis: 30%;
+    flex: 1;
+  }
+
+  &__image-wrapper {
+    max-height: 275px;
+  }
+
+  &__image {
+    object-fit: cover;
+  }
+
+}
