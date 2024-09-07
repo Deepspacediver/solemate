@@ -28,8 +28,9 @@ export const shoesWithCategorySchema = z.object({
 export const categoryCreationSchema = z.object({
     body: z.object({
         name: z.string({message: 'Name cannot be empty'}).trim(),
-        picture: z.string().url(
-            {message: 'Picture must be a link'}).trim().optional(),
+        picture: z.union([z.string().url(
+        ), z.literal(
+            '')]),
         description: z.string(
             {message: 'Description cannot be empty'}).trim(),
     })
