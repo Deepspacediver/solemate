@@ -14,7 +14,7 @@ const Textarea = ({className, name, labelName, errors, ...rest}: InputPros) => {
             </textarea>
             {!!errors?.length && <ul className="textarea-wrapper__error-wrapper">
                 {errors.map(error => {
-                    return <li className="textarea-wrapper__error">{error}</li>;
+                    return <li key={`${name}_${error}`} className="textarea-wrapper__error">{error}</li>;
                 })}
             </ul>}
         </div>

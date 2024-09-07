@@ -13,7 +13,7 @@ const Input = ({type, className, name, labelName, errors, ...rest}: InputPros) =
             </input>
             {!!errors?.length && <ul className="input-wrapper__error-wrapper">
                 {errors.map(error => {
-                    return <li className="input-wrapper__error">{error}</li>;
+                    return <li key={`${name}_${error}`} className="input-wrapper__error">{error}</li>;
                 })}
             </ul>}
         </div>
