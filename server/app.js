@@ -3,6 +3,7 @@ import express from 'express';
 import cors from 'cors';
 import categoriesRouter from "./routes/categories-routes.js";
 import zodMiddleware from "./middlewares/zod-middleware.js";
+import shoeRouter from "./routes/shoe-routes.js";
 
 const corsOptions = {
     origin: ['http://localhost:5173'],
@@ -14,6 +15,7 @@ app.use(express.urlencoded({extended: true}));
 app.use(express.json());
 
 app.use('/categories', categoriesRouter);
+app.use('/shoes', shoeRouter);
 
 
 app.get('/api', (req, res) => {
