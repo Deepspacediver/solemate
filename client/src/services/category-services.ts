@@ -12,7 +12,7 @@ export const getAllCategories = async (signal: AbortSignal) => {
 };
 
 export const createCategory = async ({name, picture, description}: CreateCategoryType) => {
-    const {data} = await axiosClient.post(`${CategoryRoutes.CATEGORIES}/category/add}`, {name, picture, description});
+    const {data} = await axiosClient.post(`${CategoryRoutes.CATEGORIES}/category/add`, {name, picture, description});
     return data;
 };
 
