@@ -14,11 +14,14 @@ export const categoriesGet = asyncHandler(async (req, res) => {
 
 
 export const categoryCreatePost = asyncHandler(async (req, res) => {
+
     parseRequestZod(categoryCreationSchema, req);
 
-    const {picture, name} = req.body;
 
-    const createdCategory = await db.createCategory({picture, name});
+    const {picture, name, description} = req.body;
+
+    const createdCategory = await db.createCategory(
+        {picture, name, description});
     res.json(createdCategory);
 });
 
@@ -27,10 +30,10 @@ export const categoryUpdatePost =
     asyncHandler(async (req, res) => {
         parseRequestZod(categoryUpdateSchema, req);
         const {categoryId} = req.params;
-        const {picture, name} = req.body;
+        const {picture, name, description} = req.body;
 
         const updatedCategory = await db.updateCategory({
-            categoryId, picture, name
+            categoryId, picture, name, description
         });
         res.json(updatedCategory);
     });
