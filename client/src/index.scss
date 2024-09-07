@@ -5,16 +5,17 @@
   --col-secondary: #eaddd0;
   --col-light-gray: #b1b0aa;
 
-  --col-light-beige: #faf0e6;
+  --col-light-beige: #f5e8d3;
   --col-white: #ffff;
 
   --font-family: "Ubuntu";
+
+  --box-shadow: 2px -1px 24px -9px rgba(66, 68, 90, 1);
 }
 
 html {
   font-family: var(--font-family), sans-serif;
   background-color: var(--col-light-beige);
-
 }
 
 body {
