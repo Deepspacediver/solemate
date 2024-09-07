@@ -8,13 +8,14 @@ const SQL = ` CREATE TABLE IF NOT EXISTS shoes (
         shoe_id INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
         name VARCHAR(255),
         picture TEXT DEFAULT '',
-        description TEXT DEFAULT ''
+        description TEXT
         );
     
     CREATE TABLE IF NOT EXISTS categories (
         category_id INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
         name VARCHAR(255),
-        picture TEXT DEFAULT ''
+        picture TEXT DEFAULT '',
+        description TEXT
         );
         
                 

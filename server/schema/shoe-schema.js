@@ -8,8 +8,11 @@ export const GetShoeSchema = z.object({
 
 export const CreateShoeSchema = z.object({
     body: z.object({
-        name: z.string({message: 'Name is required'}),
-        picture: z.string({message: 'Picture is required'}),
+        name: z.string({message: 'Name is required'}).trim(),
+        picture: z.string().url(
+            {message: 'Picture must be a link'}).trim().optional(),
+        description: z.string({message: 'description is required'}).trim(),
+
     })
 });
 
@@ -19,6 +22,8 @@ export const UpdateShoeSchema = z.object({
     }),
     body: z.object({
         name: z.string({message: 'Name is required'}),
-        picture: z.string({message: 'Picture is required'}),
+        picture: z.string({message: 'Picture is required'}).url(
+            {message: 'Picture must be a link'}).url().trim().optional(),
+        description: z.string({message: 'description is required'}).trim(),
     })
 });

@@ -5,8 +5,10 @@ export const categoryUpdateSchema = z.object({
         {
 
             name: z.string({message: 'Name cannot be empty'}).trim(),
-            picture: z.string({message: 'Picture cannot be empty'}).url(
-                {message: 'Picture must be a link'}).trim(),
+            picture: z.string().url(
+                {message: 'Picture must be a link'}).optional(),
+            description: z.string(
+                {message: 'Description cannot be empty'}).trim(),
 
         }
     ),
@@ -24,11 +26,13 @@ export const shoesWithCategorySchema = z.object({
 });
 
 export const categoryCreationSchema = z.object({
-    body: {
+    body: z.object({
         name: z.string({message: 'Name cannot be empty'}).trim(),
-        picture: z.string({message: 'Picture cannot be empty'}).url(
-            {message: 'Picture must be a link'}).url().trim()
-    }
+        picture: z.string().url(
+            {message: 'Picture must be a link'}).trim().optional(),
+        description: z.string(
+            {message: 'Description cannot be empty'}).trim(),
+    })
 });
 
 export const categoryDeletionSchema = z.object({
