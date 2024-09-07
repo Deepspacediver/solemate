@@ -1,6 +1,7 @@
-import {RouteObject} from "react-router-dom";
-import Layout from "@/views/layout.tsx";
+import {Outlet, RouteObject} from "react-router-dom";
+import Layout from "@views/layout/layout.tsx";
 import CategoriesView from "@/views/categories-view/categories-view.tsx";
+import CategoryForm from "@components/category-form/category-form.tsx";
 
 export const routes: RouteObject[] = [
     {
@@ -9,8 +10,18 @@ export const routes: RouteObject[] = [
         children: [
             {
                 path: 'categories-view',
-                element: <CategoriesView/>
-            }
+                element: <Outlet/>,
+                children: [
+                    {
+                        path: '',
+                        element: <CategoriesView/>
+                    },
+                    {
+                        path: 'add-category',
+                        element: <CategoryForm/>
+                    }]
+            },
+
         ]
     }
 ];
