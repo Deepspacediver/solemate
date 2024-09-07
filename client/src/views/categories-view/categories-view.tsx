@@ -1,8 +1,8 @@
 import {getAllCategories} from "@/services/category-services.ts";
 import {useEffect, useState} from "react";
 import {CategoryAPIType} from "@/types/category-types.ts";
-import CategoryPreview from "@components/category-preview/category-preview.tsx";
-import '@components/category-preview/categories-view.scss';
+import CategoryPreview from "@components//category-preview/category-preview.tsx";
+import '@views/categories-view/categories-view.scss';
 
 const CategoriesView = () => {
     const [categories, setCategories] = useState<CategoryAPIType[]>([]);
