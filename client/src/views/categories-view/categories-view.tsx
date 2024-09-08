@@ -1,9 +1,9 @@
 import {getAllCategories} from "@/services/category-services.ts";
 import {useEffect, useState} from "react";
 import {CategoryAPIType} from "@/types/category-types.ts";
-import CategoryPreview from "@components//category-preview/category-preview.tsx";
 import '@views/categories-view/categories-view.scss';
 import Button from "@components/button/button.tsx";
+import PreviewItem from "@components/preview-item/preview-item.tsx";
 
 const CategoriesView = () => {
     const [categories, setCategories] = useState<CategoryAPIType[]>([]);
@@ -40,9 +40,9 @@ const CategoriesView = () => {
             <h2 className="categories__heading">Categories of shoes</h2>
             <Button isNavlink path="add-category" className="categories__button">Add category</Button>
             <div className="categories__container">
-                {!!categories.length && categories.map(({category_id, name, picture, description}) => (
-                    <CategoryPreview key={category_id} categoryId={category_id} name={name} picture={picture}
-                                     description={description}/>
+                {!!categories.length && categories.map(({category_id, name, picture}) => (
+                    <PreviewItem path={`${category_id}`} key={category_id} name={name} picture={picture}
+                    />
 
                 ))}
             </div>
