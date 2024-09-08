@@ -1,9 +1,11 @@
 import axiosClient from "@/services/index.ts";
-import {CategoryAPIType, CategoryType, CreateCategoryType} from "@/types/category-types.ts";
+import {CategoryAPIType, CategoryType, CategoryWithShoesAPIType, CreateCategoryType} from "@/types/category-types.ts";
+import {ShoeAPIType} from "@/types/shoe-types.ts";
 
 enum CategoryRoutes {
     CATEGORIES = "/categories",
-    WITHOUT_CATEGORY = '/categoryless/list'
+    WITHOUT_CATEGORY = '/categoryless/list',
+    WITH_SHOES = '/category-with-shoes'
 }
 
 export const getAllCategories = async (signal: AbortSignal) => {
@@ -27,8 +29,8 @@ export const updateCategory = async ({name, picture, description, categoryId}: C
     return data;
 };
 
-export const getCategoryItemsById = async (id: number) => {
-    const {data} = await axiosClient.get(`${CategoryRoutes.CATEGORIES}/${id}`);
+export const getCategoryItemsById = async (categoryId: number, signal: AbortSignal) => {
+    const {data} = await axiosClient.get<ShoeAPIType[]>(`${CategoryRoutes.CATEGORIES}/${categoryId}`, {signal});
     return data;
 };
 
@@ -39,5 +41,10 @@ export const getItemsWithoutCategory = async () => {
 
 export const deleteCategory = async (id: number) => {
     const {data} = await axiosClient.delete(`${CategoryRoutes.CATEGORIES}/${id}`);
+    return data;
+};
+
+export const getCategoryWithShoes = async (categoryId: number, signal: AbortSignal) => {
+    const {data} = await axiosClient.get<CategoryWithShoesAPIType>(`${CategoryRoutes.CATEGORIES}${CategoryRoutes.WITH_SHOES}/${categoryId}`, {signal});
     return data;
 };
