@@ -1,3 +1,5 @@
+import {ShoeAPIType} from "@/types/shoe-types.ts";
+
 export type CategoryType = {
     name: string,
     picture: string,
@@ -10,3 +12,8 @@ export type CategoryAPIType = Omit<CategoryType, 'categoryId'> & {
 }
 
 export type CreateCategoryType = Pick<CategoryType, 'name' | 'description' | 'picture'>
+
+export type CategoryWithShoesAPIType = {
+    category: CategoryAPIType,
+    shoes: ShoeAPIType[]
+}
