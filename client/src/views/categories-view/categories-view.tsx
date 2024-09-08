@@ -3,6 +3,7 @@ import {useEffect, useState} from "react";
 import {CategoryAPIType} from "@/types/category-types.ts";
 import CategoryPreview from "@components//category-preview/category-preview.tsx";
 import '@views/categories-view/categories-view.scss';
+import Button from "@components/button/button.tsx";
 
 const CategoriesView = () => {
     const [categories, setCategories] = useState<CategoryAPIType[]>([]);
@@ -37,6 +38,7 @@ const CategoriesView = () => {
     return (
         <div className="categories">
             <h2 className="categories__heading">Categories of shoes</h2>
+            <Button isNavlink path="add-category" className="categories__button">Add category</Button>
             <div className="categories__container">
                 {!!categories.length && categories.map(({category_id, name, picture, description}) => (
                     <CategoryPreview key={category_id} categoryId={category_id} name={name} picture={picture}
