@@ -61,3 +61,11 @@ export const shoesWithoutCategoriesGet = asyncHandler(async (req, res) => {
     res.json(data);
 });
 
+export const categoryWithShoesGet = asyncHandler(async (req, res) => {
+    const {categoryId} = req.params;
+    console.log(categoryId);
+    parseRequestZod(shoesWithCategorySchema, req);
+    const data = await db.getCategoryWithShoes(categoryId);
+    res.json(data);
+});
+

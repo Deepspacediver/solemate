@@ -12,7 +12,10 @@ categoriesRouter.get('/', categoriesController.categoriesGet)
         '/:categoryId', categoriesController.categoryUpdatePost)
     .get(
         '/:categoryId', categoriesController.shoesWithCategoryGet)
-    .get('/categoryless/list', categoriesController.shoesWithoutCategoriesGet)
+    .get('/categoryless/list',
+        categoriesController.shoesWithoutCategoriesGet).get(
+    '/category-with-shoes/:categoryId',
+    categoriesController.categoryWithShoesGet)
     .delete(
         '/:categoryId',
         categoriesController.categoryRemoveDelete);
