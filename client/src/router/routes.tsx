@@ -9,7 +9,7 @@ export const routes: RouteObject[] = [
         element: <Layout/>,
         children: [
             {
-                path: 'categories-view',
+                path: 'categories',
                 element: <Outlet/>,
                 children: [
                     {
@@ -19,7 +19,8 @@ export const routes: RouteObject[] = [
                     {
                         path: 'add-category',
                         element: <CategoryForm/>
-                    }]
+                    },
+                ]
             },
 
         ]

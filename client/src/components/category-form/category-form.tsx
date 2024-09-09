@@ -38,7 +38,7 @@ const CategoryForm = () => {
                     const dataToSend = Object.fromEntries(categoryFormData);
                     categorySchema.parse(dataToSend);
                     await createCategory(dataToSend as CreateCategoryType);
-                    navigate('/categories-view');
+                    navigate('/categories');
                 } catch (err) {
                     console.log(err);
                     if (err instanceof ZodError) {

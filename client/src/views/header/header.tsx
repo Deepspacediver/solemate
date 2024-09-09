@@ -9,7 +9,7 @@ const navLinks: { name: string, path: string }[] = [{
     path: '/items'
 }, {
     name: "Categories",
-    path: "/categories-view"
+    path: "/categories"
 }];
 
 const Header = () => {
