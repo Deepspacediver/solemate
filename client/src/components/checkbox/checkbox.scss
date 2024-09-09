@@ -1,0 +1,42 @@
+.checkbox-wrapper {
+  &__label {
+    font-size: 15px;
+    font-weight: 500;
+    cursor: pointer;
+    display: flex;
+    gap: 4px;
+    padding: 2px;
+
+  }
+
+  &__input {
+    border: 0;
+    clip: rect(0 0 0 0);
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    padding: 0;
+    position: absolute;
+    width: 1px;
+  }
+
+  &__custom-checkbox {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--col-primary);
+    background-color: var(--col-white);
+    border-radius: 14%;
+    padding: 1px;
+    width: 24px;
+    height: 24px;
+  }
+
+  &__icon {
+    display: none;
+
+    &--checked {
+      display: block;
+    }
+  }
+}
