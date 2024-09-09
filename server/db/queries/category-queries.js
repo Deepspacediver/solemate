@@ -35,7 +35,7 @@ export const getShoesFromCategory = async (categoryId) => {
 export const removeCategory = async (categoryId) => {
     await db.query('DELETE FROM categories WHERE category_id=$1',
         [categoryId]);
-    const allCategories = await db.query('SELECT * FROM categories-view');
+    const allCategories = await db.query('SELECT * FROM categories');
     return allCategories.rows;
 };
 
