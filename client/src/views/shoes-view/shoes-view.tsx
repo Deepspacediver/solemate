@@ -1,4 +1,4 @@
-import '@views/items-view/items-view.scss';
+import '@views/shoes-view/shoes-view.scss';
 import Button from "@components/button/button.tsx";
 import {getAllShoes} from "@/services/shoe-services.ts";
 import {useEffect, useState} from "react";
@@ -7,7 +7,7 @@ import PreviewItem from "@components/preview-item/preview-item.tsx";
 import ItemWrapper from "@components/item-wrapper/item-wrapper.tsx";
 
 
-const ItemsView = () => {
+const ShoesView = () => {
     const [shoes, setShoes] = useState<ShoeAPIType[]>([]);
     const [isLoading, setIsLoading] = useState(false);
     console.log(shoes);
@@ -53,4 +53,4 @@ const ItemsView = () => {
     );
 };
 
-export default ItemsView;
+export default ShoesView;
