@@ -1,0 +1,53 @@
+.shoe-form {
+  background-color: var(--col-secondary);
+  border: 1px solid var(--col-primary);
+  border-radius: 10px;
+  width: clamp(200px, 90%, 600px);
+  margin: 20px auto;
+  padding: 20px;
+  box-shadow: var(--box-shadow);
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+
+  &__global-error {
+    font-weight: 600;
+    font-size: 16px;
+    color: red;
+  }
+
+  &__form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+
+
+  &__fieldset {
+    border: none;
+    padding: 0;
+    display: flex;
+    gap: 5px;
+    flex-wrap: wrap;
+  }
+
+  &__legend {
+    font-weight: 500;
+    margin-bottom: 5px;
+  }
+
+  &__fieldset-error {
+    font-size: 11px;
+    gap: 2px;
+    color: red;
+    padding: 0 2px;
+    font-weight: 600;
+  }
+
+  &__label {
+    display: flex;
+    flex-direction: row-reverse;
+    align-items: center;
+  }
+
+}
