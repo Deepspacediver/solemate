@@ -28,7 +28,6 @@ export const getShoesFromCategory = async (categoryId) => {
                    FROM shoes JOIN shoes_with_categories AS shoe_cat 
                    ON shoe_cat.category_id = $1 AND shoes.shoe_id = shoe_cat.shoe_id`,
         [categoryId]);
-
     return rows;
 };
 
@@ -50,9 +49,9 @@ export const getShoesWithoutCategories = async () => {
 export const getCategoryWithShoes = async (categoryId) => {
     const {rows: categoryData} = await db.query(`SELECT * FROM categories 
             WHERE category_id = $1`, [categoryId]);
-    const {rows: shoes} = await db.query(`SELECT DISTINCT * FROM shoes 
+    const {rows: shoes} = await db.query(`SELECT shoes.shoe_id, shoes.picture, shoes.description, shoes.name FROM shoes 
             JOIN shoes_with_categories AS shoe_cat ON shoes.shoe_id = shoe_cat.shoe_id 
-            WHERE shoes.shoe_id = $1`, [categoryId]);
+            WHERE shoe_cat.category_id = $1`, [categoryId]);
     return {
         category: categoryData[0],
         shoes
