@@ -1,0 +1,13 @@
+.items-view {
+  display: flex;
+  flex-direction: column;
+
+  &__button {
+    padding: 10px 20px;
+    font-size: 20px;
+    font-weight: 500;
+    margin: 0 auto 30px auto;
+    width: 180px;
+  }
+
+}
