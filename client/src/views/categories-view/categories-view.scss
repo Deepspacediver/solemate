@@ -17,18 +17,4 @@
     width: 180px;
 
   }
-
-  &__container {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 20px;
-    flex-direction: column;
-
-    @include sm {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-      justify-items: center;
-    }
-  }
 }

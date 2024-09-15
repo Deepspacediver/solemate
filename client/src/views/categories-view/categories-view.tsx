@@ -4,6 +4,7 @@ import {CategoryAPIType} from "@/types/category-types.ts";
 import '@views/categories-view/categories-view.scss';
 import Button from "@components/button/button.tsx";
 import PreviewItem from "@components/preview-item/preview-item.tsx";
+import ItemWrapper from "@components/item-wrapper/item-wrapper.tsx";
 
 const CategoriesView = () => {
     const [categories, setCategories] = useState<CategoryAPIType[]>([]);
@@ -38,14 +39,20 @@ const CategoriesView = () => {
     return (
         <div className="categories">
             <h2 className="categories__heading">Categories of shoes</h2>
-            <Button isNavlink path="add-category" className="categories__button">Add category</Button>
-            <div className="categories__container">
-                {!!categories.length && categories.map(({category_id, name, picture}) => (
-                    <PreviewItem path={`${category_id}`} key={category_id} name={name} picture={picture}
+            <Button isNavlink path="add-category"
+                    className="categories__button">Add category</Button>
+            <ItemWrapper>
+                {!!categories.length && categories.map(({
+                                                            category_id,
+                                                            name,
+                                                            picture
+                                                        }) => (
+                    <PreviewItem path={`${category_id}`} key={category_id}
+                                 name={name} picture={picture}
                     />
 
                 ))}
-            </div>
+            </ItemWrapper>
         </div>
     );
 };
