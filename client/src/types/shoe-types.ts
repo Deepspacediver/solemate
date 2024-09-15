@@ -6,3 +6,10 @@ export type ShoeType = {
 }
 
 export type ShoeAPIType = { shoe_id: number } & Omit<ShoeType, 'shoeId'>
+
+export type CreateShoeType = {
+    name: string,
+    description: string,
+    picture: string,
+    categories: number[]
+}
