@@ -25,8 +25,9 @@ export const shoeGet = asyncHandler(async (req, res) => {
 
 export const shoeCreatePost = asyncHandler(async (req, res) => {
     parseRequestZod(CreateShoeSchema, req);
-    const {name, picture, description} = req.body;
-    const data = await createShoe({name, picture, description});
+    const {name, picture, description, categories} = req.body;
+    const data = await createShoe(
+        {name, picture, description, categoryIdArray: categories});
     res.json(data);
 });
 
