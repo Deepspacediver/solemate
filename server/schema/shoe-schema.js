@@ -9,9 +9,12 @@ export const GetShoeSchema = z.object({
 export const CreateShoeSchema = z.object({
     body: z.object({
         name: z.string({message: 'Name is required'}).trim(),
-        picture: z.string().url(
-            {message: 'Picture must be a link'}).trim().optional(),
+        picture: z.union(
+            [z.string().url({message: 'Picture must be a link'}), z.literal(
+                '')]),
         description: z.string({message: 'description is required'}).trim(),
+        categories: z.number().array().nonempty(
+            {message: "Shoe must have at least one category"})
 
     })
 });
