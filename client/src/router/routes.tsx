@@ -27,6 +27,11 @@ export const routes: RouteObject[] = [
                         path: ':categoryId',
                         element: <CategoryView/>
                     },
+                    {
+                        path: ':categoryId/edit-category',
+                        element: <CategoryForm/>
+                    },
+
                 ]
             },
             {

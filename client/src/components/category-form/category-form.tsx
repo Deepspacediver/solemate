@@ -1,12 +1,16 @@
 import '@/components/category-form/category-form.scss';
 import Input from "@components/input/input.tsx";
 import Button from "@components/button/button.tsx";
-import {createCategory} from "@/services/category-services.ts";
+import {
+    createCategory,
+    getCategory,
+    updateCategory
+} from "@/services/category-services.ts";
 import {z, ZodError} from 'zod';
-import {useState} from "react";
-import {CreateCategoryType} from "@/types/category-types.ts";
+import {useEffect, useState} from "react";
+import {CategoryAPIType, CreateCategoryType} from "@/types/category-types.ts";
 import Textarea from "@components/textarea/textarea.tsx";
-import {useNavigate} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 import {AxiosError} from "axios";
 
 const categorySchema = z.object({
@@ -27,12 +31,61 @@ type CategoryErrors = {
 }
 
 const CategoryForm = () => {
+
+    const [categoryData, setCategoryData] = useState<CategoryAPIType | null>(null);
+    const [isLoading, setIsLoading] = useState(false);
     const [errors, setErrors] = useState<CategoryErrors>({
         name: [],
         picture: [],
         description: []
     });
+
+    const {categoryId} = useParams();
+    const parsedCategoryId = categoryId ? +categoryId : null;
+    const isEditForm = !!parsedCategoryId;
+
+    const setGlobalError = (error: AxiosError) => {
+        const errorData = error?.response?.data as { error: string };
+        setErrors({
+            name: [],
+            picture: [],
+            description: [],
+            globalError: errorData?.error ?? error.message
+        });
+    };
+
+
+    useEffect(() => {
+        const abortController = new AbortController();
+        const getCategoryInfo = async () => {
+            if (!isEditForm) return;
+            try {
+                setIsLoading(true);
+                const data = await getCategory(parsedCategoryId, abortController.signal);
+                setCategoryData(data);
+            } catch (err) {
+                const error = err as AxiosError;
+                setGlobalError(error);
+            } finally {
+                setIsLoading(false);
+            }
+        };
+
+        getCategoryInfo();
+        return () => {
+            abortController.abort();
+        };
+
+    }, [parsedCategoryId]);
+
+
     const navigate = useNavigate();
+
+    const {name, description, picture} = categoryData ?? {};
+
+    if (isLoading) {
+        return <div>Loading...</div>;
+    }
 
     return (
         <div className="category-form">
@@ -45,9 +98,16 @@ const CategoryForm = () => {
                 e.preventDefault();
                 try {
                     const categoryFormData = new FormData(e.currentTarget);
-                    const dataToSend = Object.fromEntries(categoryFormData);
+                    const dataToSend = Object.fromEntries(categoryFormData) as CreateCategoryType;
                     categorySchema.parse(dataToSend);
-                    await createCategory(dataToSend as CreateCategoryType);
+                    if (!isEditForm) {
+                        await createCategory(dataToSend);
+                    } else {
+                        await updateCategory({
+                            ...dataToSend,
+                            categoryId: parsedCategoryId
+                        });
+                    }
                     navigate('/categories');
                 } catch (err) {
                     if (err instanceof ZodError) {
@@ -60,23 +120,19 @@ const CategoryForm = () => {
                         return;
                     }
                     const error = err as AxiosError;
-                    const errorData = error?.response?.data as {
-                        error?: string
-                    };
-                    setErrors({
-                        name: [],
-                        picture: [],
-                        description: [],
-                        globalError: errorData?.error ?? error.message
-                    });
+                    setGlobalError(error);
                 }
             }}>
 
-                <Input name="name" required labelName={'Name'}
+                <Input defaultValue={name ?? ''} name="name" required
+                       labelName={'Name'}
                        errors={errors.name}/>
-                <Input name="picture" labelName={'Picture (url)'}
+                <Input defaultValue={picture ?? ''} name="picture"
+                       labelName={'Picture (url)'}
                        errors={errors.picture}/>
-                <Textarea rows={6} name="description" required
+                <Textarea defaultValue={description ?? ''} rows={6}
+                          name="description"
+                          required
                           labelName={'Description'}
                           errors={errors.description}/>
                 <Button className="category-form__button">Submit</Button>
