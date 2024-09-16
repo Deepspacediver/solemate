@@ -41,7 +41,7 @@ const ShoesView = () => {
 
     return (
         <div className="shoes-view">
-            <h2>All shoes</h2>
+            <h2 className="shoes-view__heading">All shoes</h2>
             <Button className="shoes-view__button" isNavlink path={'add-item'}>Add
                 item</Button>
             <ItemWrapper>
