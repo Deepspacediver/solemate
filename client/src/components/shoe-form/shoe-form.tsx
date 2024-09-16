@@ -32,7 +32,6 @@ type ShoeFormErrors = {
 const ShoeForm = () => {
     const [categoryOptions, setCategoryOptions] = useState<CategoryOption[]>([]);
     const [isLoading, setIsLoading] = useState(false);
-    console.log(categoryOptions);
     const [checkedIds, setCheckedIds] = useState<number[]>([]);
     const [errors, setErrors] = useState<ShoeFormErrors>({
         name: [],

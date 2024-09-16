@@ -10,7 +10,6 @@ import ItemWrapper from "@components/item-wrapper/item-wrapper.tsx";
 const ShoesView = () => {
     const [shoes, setShoes] = useState<ShoeAPIType[]>([]);
     const [isLoading, setIsLoading] = useState(false);
-    console.log({shoes});
 
     useEffect(() => {
         const controller = new AbortController();
