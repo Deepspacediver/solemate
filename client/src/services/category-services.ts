@@ -63,8 +63,8 @@ export const getItemsWithoutCategory = async () => {
     return data;
 };
 
-export const deleteCategory = async (id: number) => {
-    const {data} = await axiosClient.delete(`${CategoryRoutes.CATEGORIES}/${id}`);
+export const deleteCategory = async (categoryId: number) => {
+    const {data} = await axiosClient.delete(`${CategoryRoutes.CATEGORIES}/${categoryId}`);
     return data;
 };
 

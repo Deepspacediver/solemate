@@ -2,7 +2,7 @@ import '@/components/category-form/category-form.scss';
 import Input from "@components/input/input.tsx";
 import Button from "@components/button/button.tsx";
 import {
-    createCategory,
+    createCategory, deleteCategory,
     getCategory,
     updateCategory
 } from "@/services/category-services.ts";
@@ -135,6 +135,18 @@ const CategoryForm = () => {
                           required
                           labelName={'Description'}
                           errors={errors.description}/>
+                {isEditForm && <Button
+                    className="category-form__button category-form__button--delete"
+                    onClick={async () => {
+                        try {
+                            await deleteCategory(parsedCategoryId);
+                            navigate('/categories');
+                        } catch (err) {
+                            const error = err as AxiosError;
+                            setGlobalError(error);
+                        }
+                    }}>Remove
+                    category</Button>}
                 <Button className="category-form__button">Submit</Button>
             </form>
 

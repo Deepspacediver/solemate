@@ -23,7 +23,12 @@
   }
 
 
-  &__button:defined {
+  &__button {
     margin: 0 auto;
+
+    &--delete {
+      margin: 0;
+      width: 150px;
+    }
   }
 }
