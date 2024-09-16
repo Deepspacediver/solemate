@@ -5,6 +5,7 @@ import {useParams} from "react-router-dom";
 import {CategoryWithShoesAPIType} from "@/types/category-types.ts";
 import PreviewItem from "@components/preview-item/preview-item.tsx";
 import ItemWrapper from "@components/item-wrapper/item-wrapper.tsx";
+import Button, {ButtonVariants} from "@components/button/button.tsx";
 
 
 const CategoryView = () => {
@@ -50,8 +51,15 @@ const CategoryView = () => {
 
     return (
         <div className="category-view">
-            <h2 className="category-view__heading">{categoryName ?? ''}</h2>
-            <p className="category-view__description">{categoryDescription ?? ''}</p>
+            <div className="category-view__info">
+                <h2 className="category-view__heading">{categoryName ?? ''}</h2>
+                <p className="category-view__description">{categoryDescription ?? ''}</p>
+            </div>
+            <div className="category-view__button-container">
+                <Button variant={ButtonVariants.PRIMARY} isNavlink
+                        path="edit-category">Edit
+                    category</Button>
+            </div>
 
             <ItemWrapper>
                 {!!shoesArray.length && shoesArray.map(({
