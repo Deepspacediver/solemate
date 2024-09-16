@@ -1,12 +1,11 @@
 @import '@/mixins';
 
 .categories {
-  padding: 10px;
   display: flex;
   flex-direction: column;
 
   &__heading {
-    margin-bottom: 20px;
+    margin: 0 auto 20px auto;
   }
 
   &__button:defined {
