@@ -38,7 +38,7 @@ export const categoryCreationSchema = z.object({
 });
 
 export const categoryDeletionSchema = z.object({
-    body: z.object({
+    params: z.object({
         categoryId: z.coerce.number(
             {message: 'Category id must be a number'}),
     })

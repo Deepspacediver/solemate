@@ -55,7 +55,7 @@ export const shoesWithCategoryGet = asyncHandler(async (req, res) => {
 
 export const categoryRemoveDelete = asyncHandler(async (req, res) => {
     parseRequestZod(categoryDeletionSchema, req);
-    const {categoryId} = req.body;
+    const {categoryId} = req.params;
 
     const remainingCategories = await db.removeCategory(categoryId);
     res.json(remainingCategories);
