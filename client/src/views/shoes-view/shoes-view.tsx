@@ -10,7 +10,7 @@ import ItemWrapper from "@components/item-wrapper/item-wrapper.tsx";
 const ShoesView = () => {
     const [shoes, setShoes] = useState<ShoeAPIType[]>([]);
     const [isLoading, setIsLoading] = useState(false);
-    console.log(shoes);
+    console.log({shoes});
 
     useEffect(() => {
         const controller = new AbortController();
@@ -24,14 +24,15 @@ const ShoesView = () => {
                 console.error(err);
             } finally {
                 setIsLoading(false);
-
             }
-            getShoes();
-
-            return () => {
-                controller.abort();
-            };
         };
+
+        getShoes();
+
+        return () => {
+            controller.abort();
+        };
+
     }, []);
 
     if (isLoading) {
@@ -39,9 +40,9 @@ const ShoesView = () => {
     }
 
     return (
-        <div className="items-view">
-            <h2>All items</h2>
-            <Button className="items-view__button" isNavlink path={'add-item'}>Add
+        <div className="shoes-view">
+            <h2>All shoes</h2>
+            <Button className="shoes-view__button" isNavlink path={'add-item'}>Add
                 item</Button>
             <ItemWrapper>
                 {!!shoes.length && shoes.map(({shoe_id, name, picture}) => (
