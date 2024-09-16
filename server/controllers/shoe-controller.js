@@ -8,12 +8,17 @@ import {
 import {
     createShoe,
     deleteShoe,
-    getShoe,
+    getShoe, getShoes,
     updateShoe
 } from "../db/queries/shoe-queries.js";
 
+export const shoesGet = asyncHandler(async (req, res) => {
+    const data = await getShoes();
+    res.json(data);
 
-export const shoeGet = asyncHandler(async (req, res) => {
+});
+
+export const shoeByIdGet = asyncHandler(async (req, res) => {
     parseRequestZod(GetShoeSchema, req);
     const {shoeId} = req.params;
     const data = await getShoe(shoeId);

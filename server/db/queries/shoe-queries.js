@@ -30,6 +30,11 @@ export const updateShoe = async ({name, picture, description, shoeId}) => {
     return rows[0];
 };
 
+export const getShoes = async () => {
+    const {rows} = await db.query('SELECT * FROM shoes');
+    return rows;
+};
+
 export const getShoe = async (shoeId) => {
     const {rows: shoe} = await db.query(`SELECT * FROM shoes WHERE shoe_id=$1`,
         [shoeId]);
