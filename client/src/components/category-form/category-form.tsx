@@ -7,6 +7,7 @@ import {useState} from "react";
 import {CreateCategoryType} from "@/types/category-types.ts";
 import Textarea from "@components/textarea/textarea.tsx";
 import {useNavigate} from "react-router-dom";
+import {AxiosError} from "axios";
 
 const categorySchema = z.object({
     name: z.string({message: "Name is required"}).min(4, {message: 'Name is too short'}).trim(),
@@ -22,15 +23,24 @@ type CategoryErrors = {
     name: string[],
     description: string[],
     picture: string[],
+    globalError?: string;
 }
 
 const CategoryForm = () => {
-    const [errors, setErrors] = useState<CategoryErrors>({name: [], picture: [], description: []});
+    const [errors, setErrors] = useState<CategoryErrors>({
+        name: [],
+        picture: [],
+        description: []
+    });
     const navigate = useNavigate();
 
     return (
         <div className="category-form">
             <h2>Category form</h2>
+
+            {!!errors?.globalError &&
+                <p className="category-form__global-error">{errors.globalError}</p>}
+
             <form className="category-form__form" onSubmit={async (e) => {
                 e.preventDefault();
                 try {
@@ -40,22 +50,35 @@ const CategoryForm = () => {
                     await createCategory(dataToSend as CreateCategoryType);
                     navigate('/categories');
                 } catch (err) {
-                    console.log(err);
                     if (err instanceof ZodError) {
-                        const errorZod = err as ZodError;
-                        const fieldErrors = errorZod.flatten().fieldErrors;
+                        const fieldErrors = err.flatten().fieldErrors;
                         setErrors({
                             name: fieldErrors['name'] ?? [],
                             description: fieldErrors['description'] ?? [],
                             picture: fieldErrors['picture'] ?? []
                         });
+                        return;
                     }
+                    const error = err as AxiosError;
+                    const errorData = error?.response?.data as {
+                        error?: string
+                    };
+                    setErrors({
+                        name: [],
+                        picture: [],
+                        description: [],
+                        globalError: errorData?.error ?? error.message
+                    });
                 }
             }}>
 
-                <Input name="name" required labelName={'Name'} errors={errors.name}/>
-                <Input name="picture" labelName={'Picture (url)'} errors={errors.picture}/>
-                <Textarea rows={6} name="description" required labelName={'Description'} errors={errors.description}/>
+                <Input name="name" required labelName={'Name'}
+                       errors={errors.name}/>
+                <Input name="picture" labelName={'Picture (url)'}
+                       errors={errors.picture}/>
+                <Textarea rows={6} name="description" required
+                          labelName={'Description'}
+                          errors={errors.description}/>
                 <Button className="category-form__button">Submit</Button>
             </form>
 
