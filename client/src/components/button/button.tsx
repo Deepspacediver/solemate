@@ -3,13 +3,32 @@ import {ButtonHTMLAttributes, ReactNode,} from "react";
 import clsx from "clsx";
 import {NavLink} from "react-router-dom";
 
-type ButtonPros = { isNavlink?: boolean, path?: string, children: ReactNode }
+export enum ButtonVariants {
+    PRIMARY = 'primary'
+}
+
+type ButtonPros =
+    {
+        isNavlink?: boolean,
+        path?: string,
+        children: ReactNode,
+        variant?: ButtonVariants
+    }
     & ButtonHTMLAttributes<HTMLButtonElement>;
 
-const Button = ({isNavlink, path, children, className, ...rest}: ButtonPros) => {
+const Button = ({
+                    isNavlink,
+                    path,
+                    children,
+                    className,
+                    variant,
+                    ...rest
+                }: ButtonPros) => {
     return (
         isNavlink && path ?
-            (<NavLink className={clsx('button', className)} to={path}>
+            (<NavLink
+                className={clsx('button', variant && `button--${variant}`, className)}
+                to={path}>
                 {children}
             </NavLink>) :
             (<button {...rest} className={clsx(className, 'button')}>
