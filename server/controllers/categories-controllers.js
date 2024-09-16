@@ -12,6 +12,12 @@ export const categoriesGet = asyncHandler(async (req, res) => {
     res.json(rows);
 });
 
+export const categoryGet = asyncHandler(async (req, res) => {
+    parseRequestZod(shoesWithCategorySchema, req);
+    const {categoryId} = req.params;
+    const data = await db.getCategory(categoryId);
+    res.json(data);
+});
 
 export const categoryCreatePost = asyncHandler(async (req, res) => {
 

@@ -9,7 +9,8 @@ categoriesRouter.get('/', categoriesController.categoriesGet)
     .post(
         '/category/add', categoriesController.categoryCreatePost)
     .put(
-        '/:categoryId', categoriesController.categoryUpdatePost)
+        '/:categoryId', categoriesController.categoryUpdatePost).get(
+    '/category-data/:categoryId', categoriesController.categoryGet)
     .get(
         '/:categoryId', categoriesController.shoesWithCategoryGet)
     .get('/categoryless/list',
