@@ -38,10 +38,11 @@ export const shoeCreatePost = asyncHandler(async (req, res) => {
 
 export const shoeUpdatePut = asyncHandler(async (req, res) => {
     parseRequestZod(UpdateShoeSchema, req);
-    const {name, picture, description} = req.body;
+    const {name, picture, description, categories} = req.body;
     const {shoeId} = req.params;
 
-    const data = await updateShoe({name, picture, shoeId, description});
+    const data = await updateShoe(
+        {name, picture, shoeId, description, categoryIdArray: categories});
     if (!data) {
         res.status(404).json({error: 'Could not find shoe'});
     }
