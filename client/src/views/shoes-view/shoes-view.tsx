@@ -45,7 +45,7 @@ const ShoesView = () => {
                 item</Button>
             <ItemWrapper>
                 {!!shoes.length && shoes.map(({shoe_id, name, picture}) => (
-                    <PreviewItem name={name} picture={picture}
+                    <PreviewItem key={shoe_id} name={name} picture={picture}
                                  path={`${shoe_id}`}/>))}
             </ItemWrapper>
 
