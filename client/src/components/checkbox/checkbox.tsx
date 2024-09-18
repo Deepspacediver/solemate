@@ -9,7 +9,7 @@ type CheckboxProps = {
     handleChange: (value: any) => void,
     isChecked?: boolean,
     className?: string,
-    labelClassName?: string;
+    labelClassName?: string,
 }
 
 const CheckMarkIcon = ({isChecked, className}: {
@@ -30,14 +30,15 @@ const Checkbox = ({
                       isChecked,
                       handleChange,
                       name,
-                      labelClassName
+                      labelClassName,
                   }: CheckboxProps) => {
 
     return (
         <div className={clsx('checkbox-wrapper', className)}>
             <label
                 className={clsx("checkbox-wrapper__label", labelClassName)}>{label}
-                <input name={name} className={"checkbox-wrapper__input"}
+                <input name={name}
+                       className={"checkbox-wrapper__input"}
                        value={value}
                        checked={isChecked}
                        type="checkbox" onChange={() => {
