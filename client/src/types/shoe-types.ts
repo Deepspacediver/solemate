@@ -17,3 +17,10 @@ export type ShoeWithCategoriesType = {
     categories: CategoryOption[]
 }
 
+export type CreateShoeType = Omit<ShoeWithCategoriesType, 'categories'> & {
+    categories: number[]
+}
+
+export type UpdateShoeType = CreateShoeType & {
+    shoeId: number
+}
