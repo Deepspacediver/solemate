@@ -49,6 +49,9 @@ export const routes: RouteObject[] = [
                     }, {
                         path: ':shoeId',
                         element: <ShoeDetails/>
+                    }, {
+                        path: ':shoeId/edit-shoe',
+                        element: <ShoeForm/>
                     },
                 ]
             }
