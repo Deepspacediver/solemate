@@ -23,10 +23,25 @@ export const createShoe = async ({
 
 };
 
-export const updateShoe = async ({name, picture, description, shoeId}) => {
+export const updateShoe = async ({
+                                     name, picture, description, shoeId,
+                                     categoryIdArray
+                                 }) => {
     const {rows} = await db.query(`UPDATE shoes SET name=$1, picture = $2,
                    description=$3 WHERE shoe_id = $4 RETURNING *`,
         [name, picture, description, shoeId]);
+
+    await db.query(`DELETE FROM shoes_with_categories WHERE shoe_id = $1`,
+        [shoeId]);
+
+
+    for (let i = 0; i < categoryIdArray.length; i++) {
+        const currentCategoryId = categoryIdArray[i];
+        await db.query(
+            'INSERT INTO shoes_with_categories (category_id, shoe_id) VALUES ($1, $2)',
+            [currentCategoryId, shoeId]);
+    }
+
     return rows[0];
 };
 
