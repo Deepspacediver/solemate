@@ -1,32 +1,32 @@
 import {z} from 'zod';
 
+const ShoeIdSchema = z.coerce.number({message: 'Shoe id must be a number'});
+const NameSchema = z.string({message: 'Name is required'}).trim();
+const PictureSchema = z.union(
+    [z.string().url({message: 'Picture must be a link'}), z.literal(
+        '')]);
+const DescriptionSchema = z.string({message: 'description is required'}).trim();
+const CategoriesSchema = z.number().array().nonempty(
+    {message: "Shoe must have at least one category"});
+
 export const GetShoeSchema = z.object({
     params: z.object({
-        shoeId: z.coerce.number({message: 'Shoe id must be a number'}),
+        shoeId: ShoeIdSchema
     })
 });
 
 export const CreateShoeSchema = z.object({
     body: z.object({
-        name: z.string({message: 'Name is required'}).trim(),
-        picture: z.union(
-            [z.string().url({message: 'Picture must be a link'}), z.literal(
-                '')]),
-        description: z.string({message: 'description is required'}).trim(),
-        categories: z.number().array().nonempty(
-            {message: "Shoe must have at least one category"})
+        name: NameSchema,
+        picture: PictureSchema,
+        description: DescriptionSchema,
+        categories: CategoriesSchema
 
     })
 });
 
-export const UpdateShoeSchema = z.object({
+export const UpdateShoeSchema = CreateShoeSchema.extend({
     params: z.object({
-        shoeId: z.coerce.number({message: 'Category id must be a number'}),
-    }),
-    body: z.object({
-        name: z.string({message: 'Name is required'}),
-        picture: z.string({message: 'Picture is required'}).url(
-            {message: 'Picture must be a link'}).url().trim().optional(),
-        description: z.string({message: 'description is required'}).trim(),
+        shoeId: ShoeIdSchema
     })
 });
