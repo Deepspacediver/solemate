@@ -39,12 +39,15 @@ export const getShoe = async (shoeId) => {
     const {rows: shoe} = await db.query(`SELECT * FROM shoes WHERE shoe_id=$1`,
         [shoeId]);
     const {rows: categories} = await db.query(
-        'SELECT category_id FROM shoes_with_categories WHERE shoe_id = $1',
+        `SELECT shoe_cat.category_id, categories.name FROM shoes_with_categories AS shoe_cat 
+                JOIN categories ON shoe_cat.category_id = categories.category_id 
+                WHERE shoe_id = $1`,
         [shoeId]);
-    const categoriesIdArray = categories.map(category => category.category_id);
+    const categoriesArray = categories.map(
+        category => ({categoryId: category.category_id, name: category.name}));
     return {
         ...shoe[0],
-        categories: categoriesIdArray
+        categories: categoriesArray
     };
 };
 
