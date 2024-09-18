@@ -7,17 +7,25 @@ import Input from "@components/input/input.tsx";
 import Textarea from "@components/textarea/textarea.tsx";
 import {getAllCategories} from "@/services/category-services.ts";
 import {CategoryOption} from "@/types/category-types.ts";
-import {createShoe} from "@/services/shoe-services.ts";
-import {CreateShoeType} from "@/types/shoe-types.ts";
+import {createShoe, getShoeById, updateShoe} from "@/services/shoe-services.ts";
+import {
+    CreateShoeType,
+    ShoeWithCategoriesType
+} from "@/types/shoe-types.ts";
 import {AxiosError} from "axios";
+import {useNavigate, useParams} from "react-router-dom";
 
-const shoeSchema = z.object({
+const createShoeSchema = z.object({
     name: z.string().min(5, "Name must have at least 5 characters"),
     description: z.string().min(5, "Description must have at least 5 characters"),
     picture: z.union([z.string().url({message: 'Picture must be a link'}
     ), z.literal(
         '')]),
     categories: z.coerce.number().array().nonempty({message: 'Shoe must have at least one category'})
+});
+
+const updateShoeSchema = createShoeSchema.extend({
+    shoeId: z.number({message: 'Shoe id must be a number'})
 });
 
 type ShoeFormErrors = {
@@ -31,6 +39,7 @@ type ShoeFormErrors = {
 
 const ShoeForm = () => {
     const [categoryOptions, setCategoryOptions] = useState<CategoryOption[]>([]);
+    const [shoeData, setShoeData] = useState<ShoeWithCategoriesType | null>(null);
     const [isLoading, setIsLoading] = useState(false);
     const [checkedIds, setCheckedIds] = useState<number[]>([]);
     const [errors, setErrors] = useState<ShoeFormErrors>({
@@ -40,12 +49,19 @@ const ShoeForm = () => {
         categories: [],
         globalError: '',
     });
+    const navigate = useNavigate();
+    const {shoeId} = useParams();
+    const parsedShoeId = shoeId ? +shoeId : null;
 
     const isValueInCheckedIds = (id: number) => {
         return checkedIds.includes(id);
     };
 
+
     const setGlobalError = (error: AxiosError) => {
+        if (error.message === 'canceled') {
+            return;
+        }
         const errorData = error?.response?.data as { error: string };
 
         setErrors({
@@ -79,6 +95,12 @@ const ShoeForm = () => {
                     name
                 }));
                 setCategoryOptions(categoriesAsOptions);
+                if (parsedShoeId) {
+                    const shoeDetails = await getShoeById(parsedShoeId, abortController.signal);
+                    setShoeData(shoeDetails);
+                    const categoryIdsInShoe = shoeDetails?.categories.map((category) => category.categoryId);
+                    setCheckedIds(categoryIdsInShoe);
+                }
             } catch (err) {
                 const error = err as AxiosError;
                 setGlobalError(error);
@@ -114,9 +136,19 @@ const ShoeForm = () => {
                         categories: shoeFormData.getAll('categories').map(id => +id)
                     } as CreateShoeType;
 
-                    shoeSchema.parse(dataToSend);
-                    await createShoe(dataToSend);
 
+                    if (parsedShoeId) {
+                        const updateShoeData = {
+                            ...dataToSend,
+                            shoeId: parsedShoeId
+                        };
+                        updateShoeSchema.parse(updateShoeData);
+                        await updateShoe(updateShoeData);
+                    } else {
+                        createShoeSchema.parse(dataToSend);
+                        await createShoe(dataToSend);
+                    }
+                    navigate('/shoes');
                 } catch (err) {
                     if (err instanceof ZodError) {
                         const fieldErrors = err.flatten().fieldErrors;
@@ -134,11 +166,14 @@ const ShoeForm = () => {
 
                 }
             }}>
-                <Input name="name" required labelName={'Name'}
+                <Input defaultValue={shoeData?.name ?? ''} name="name" required
+                       labelName={'Name'}
                        errors={errors.name}/>
-                <Input name="picture" labelName={'Picture (url)'}
+                <Input defaultValue={shoeData?.picture ?? ''} name="picture"
+                       labelName={'Picture (url)'}
                        errors={errors.picture}/>
-                <Textarea rows={6} name="description" required
+                <Textarea defaultValue={shoeData?.description ?? ''} rows={6}
+                          name="description" required
                           labelName={'Description'}
                           errors={errors.description}/>
                 <div className="shoe-form__fieldset-wrapper">
@@ -151,6 +186,7 @@ const ShoeForm = () => {
                                                                               name
                                                                           }) => (
                             <Checkbox labelClassName="shoe-form__label"
+                                      key={categoryId}
                                       name="categories" value={categoryId}
                                       label={name}
                                       handleChange={handleSettingIds}
