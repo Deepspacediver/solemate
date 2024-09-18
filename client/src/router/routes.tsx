@@ -5,6 +5,7 @@ import CategoryForm from "@components/category-form/category-form.tsx";
 import ShoesView from "@views/shoes-view/shoes-view.tsx";
 import ShoeForm from "@components/shoe-form/shoe-form.tsx";
 import CategoryView from "@views/category-view/category-view.tsx";
+import ShoeDetails from "@components/shoe-details/shoe-details.tsx";
 
 export const routes: RouteObject[] = [
     {
@@ -35,7 +36,7 @@ export const routes: RouteObject[] = [
                 ]
             },
             {
-                path: 'items',
+                path: 'shoes',
                 element: <Outlet/>,
                 children: [
                     {
@@ -45,7 +46,10 @@ export const routes: RouteObject[] = [
                     {
                         path: 'add-item',
                         element: <ShoeForm/>
-                    }
+                    }, {
+                        path: ':shoeId',
+                        element: <ShoeDetails/>
+                    },
                 ]
             }
 

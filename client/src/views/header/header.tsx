@@ -5,8 +5,8 @@ const navLinks: { name: string, path: string }[] = [{
     name: "Home",
     path: '/'
 }, {
-    name: "Items",
-    path: '/items'
+    name: "Shoes",
+    path: '/shoes'
 }, {
     name: "Categories",
     path: "/categories"
@@ -19,7 +19,8 @@ const Header = () => {
             <nav>
                 <ul className="header__link-container">
                     {navLinks.map(({path, name}) => (
-                        <CustomNavlink className="header__link" key={name} path={path} name={name}/>
+                        <CustomNavlink className="header__link" key={name}
+                                       path={path} name={name}/>
                     ))}
                 </ul>
             </nav>

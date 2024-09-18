@@ -1,0 +1,50 @@
+@import '@/mixins';
+
+.shoe-details {
+  width: clamp(250px, 80%, 900px);
+  margin: 40px auto 0 auto;
+  background-color: var(--col-secondary);
+  box-shadow: var(--box-shadow);
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+
+  &__error {
+    font-size: 20px;
+    color: red;
+  }
+
+  &__info {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    @include md {
+      flex-direction: row;
+    }
+    border-radius: 15px;
+  }
+
+
+  &__image-wrapper {
+    max-width: 350px;
+    margin: auto;
+  }
+
+  &__details {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  &__categories-list {
+    list-style-type: '- ';
+    margin-left: 10px;
+  }
+
+  &__button {
+    margin-left: auto;
+  }
+
+
+}
