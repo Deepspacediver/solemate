@@ -60,9 +60,12 @@ const ShoeDetails = () => {
                     <p>{shoeData?.description}</p>
                     {!!shoeData?.categories.length && <h3>Categories</h3>}
                     <ul className="shoe-details__categories-list">
-                        {!!shoeData?.categories.length && shoeData.categories.map(({name}) => {
-                            return <li
-                                className="shoe-details__category-item">{name}</li>;
+                        {!!shoeData?.categories.length && shoeData.categories.map(({
+                                                                                       name,
+                                                                                       categoryId
+                                                                                   }) => {
+                            return <li key={categoryId}
+                                       className="shoe-details__category-item">{name}</li>;
                         })}
 
                     </ul>
