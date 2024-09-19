@@ -33,3 +33,7 @@ export const updateShoe = async (shoe: UpdateShoeType) => {
     });
     return data;
 };
+
+export const deleteShoe = async (shoeId: number) => {
+    await axiosClient.delete(`${ShoeRoutes.INDEX}/${shoeId}`);
+};

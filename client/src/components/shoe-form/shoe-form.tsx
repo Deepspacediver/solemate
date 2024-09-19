@@ -7,7 +7,12 @@ import Input from "@components/input/input.tsx";
 import Textarea from "@components/textarea/textarea.tsx";
 import {getAllCategories} from "@/services/category-services.ts";
 import {CategoryOption} from "@/types/category-types.ts";
-import {createShoe, getShoeById, updateShoe} from "@/services/shoe-services.ts";
+import {
+    createShoe,
+    deleteShoe,
+    getShoeById,
+    updateShoe
+} from "@/services/shoe-services.ts";
 import {
     CreateShoeType,
     ShoeWithCategoriesType
@@ -201,6 +206,15 @@ const ShoeForm = () => {
                             {errors.categories.map(err => err)}
                         </p>}
                 </div>
+                {parsedShoeId && <Button onClick={async () => {
+                    try {
+                        await deleteShoe(parsedShoeId);
+                        navigate('/shoes');
+                    } catch (err) {
+                        const error = err as AxiosError;
+                        setGlobalError(error);
+                    }
+                }} className="shoe-form__button">Delete shoe</Button>}
                 <Button className="shoe-form__button">Submit</Button>
             </form>
 
