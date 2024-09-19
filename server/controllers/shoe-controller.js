@@ -50,7 +50,7 @@ export const shoeUpdatePut = asyncHandler(async (req, res) => {
 });
 
 export const shoeRemoveDelete = asyncHandler(async (req, res) => {
-    parseRequestZod(CreateShoeSchema, req);
+    parseRequestZod(GetShoeSchema, req);
     const {shoeId} = req.params;
     const data = await deleteShoe(shoeId);
     res.json(data);
