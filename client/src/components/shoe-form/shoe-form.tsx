@@ -19,6 +19,7 @@ import {
 } from "@/types/shoe-types.ts";
 import {AxiosError} from "axios";
 import {useNavigate, useParams} from "react-router-dom";
+import PasswordModal from "@components/password-modal/password-modal.tsx";
 
 const createShoeSchema = z.object({
     name: z.string().min(5, "Name must have at least 5 characters"),
@@ -54,6 +55,8 @@ const ShoeForm = () => {
         categories: [],
         globalError: '',
     });
+    const [isModalOpen, setIsModalOpen] = useState(false);
+
     const navigate = useNavigate();
     const {shoeId} = useParams();
     const parsedShoeId = shoeId ? +shoeId : null;
@@ -84,6 +87,17 @@ const ShoeForm = () => {
             return;
         }
         setCheckedIds((prevState) => [...prevState, id]);
+    };
+
+    const handleShoeDeletion = async () => {
+        try {
+            if (!parsedShoeId) return;
+            await deleteShoe(parsedShoeId);
+            navigate('/shoes');
+        } catch (err) {
+            const error = err as AxiosError;
+            setGlobalError(error);
+        }
     };
 
     useEffect(() => {
@@ -121,6 +135,7 @@ const ShoeForm = () => {
         };
     }, []);
 
+
     if (isLoading) {
         return <div>Loading...</div>;
     }
@@ -149,11 +164,12 @@ const ShoeForm = () => {
                         };
                         updateShoeSchema.parse(updateShoeData);
                         await updateShoe(updateShoeData);
+                        navigate(`/shoes/${parsedShoeId}`);
                     } else {
                         createShoeSchema.parse(dataToSend);
                         await createShoe(dataToSend);
+                        navigate(`/shoes`);
                     }
-                    navigate('/shoes');
                 } catch (err) {
                     if (err instanceof ZodError) {
                         const fieldErrors = err.flatten().fieldErrors;
@@ -206,17 +222,17 @@ const ShoeForm = () => {
                             {errors.categories.map(err => err)}
                         </p>}
                 </div>
-                {parsedShoeId && <Button onClick={async () => {
-                    try {
-                        await deleteShoe(parsedShoeId);
-                        navigate('/shoes');
-                    } catch (err) {
-                        const error = err as AxiosError;
-                        setGlobalError(error);
-                    }
-                }} className="shoe-form__button">Delete shoe</Button>}
+                {parsedShoeId && <Button
+                    type={'button'}
+                    className="shoe-form__button shoe-form__button--delete"
+                    onClick={() => {
+                        setIsModalOpen(true);
+                    }}>Delete shoe</Button>}
                 <Button className="shoe-form__button">Submit</Button>
             </form>
+            <PasswordModal handleCorrectPasswordSubmit={handleShoeDeletion}
+                           setIsOpen={setIsModalOpen}
+                           isOpen={isModalOpen}/>
 
         </div>
     );

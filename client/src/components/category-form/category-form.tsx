@@ -12,6 +12,7 @@ import {CategoryAPIType, CreateCategoryType} from "@/types/category-types.ts";
 import Textarea from "@components/textarea/textarea.tsx";
 import {useNavigate, useParams} from "react-router-dom";
 import {AxiosError} from "axios";
+import PasswordModal from "@components/password-modal/password-modal.tsx";
 
 const categorySchema = z.object({
     name: z.string({message: "Name is required"}).min(4, {message: 'Name is too short'}).trim(),
@@ -39,6 +40,7 @@ const CategoryForm = () => {
         picture: [],
         description: []
     });
+    const [isModalOpen, setIsModalOpen] = useState(false);
 
     const {categoryId} = useParams();
     const parsedCategoryId = categoryId ? +categoryId : null;
@@ -52,6 +54,17 @@ const CategoryForm = () => {
             description: [],
             globalError: errorData?.error ?? error.message
         });
+    };
+
+    const handleCategoryDeletion = async () => {
+        try {
+            if (!parsedCategoryId) return;
+            await deleteCategory(parsedCategoryId);
+            navigate('/shoes');
+        } catch (err) {
+            const error = err as AxiosError;
+            setGlobalError(error);
+        }
     };
 
 
@@ -135,21 +148,19 @@ const CategoryForm = () => {
                           required
                           labelName={'Description'}
                           errors={errors.description}/>
-                {isEditForm && <Button
-                    className="category-form__button category-form__button--delete"
-                    onClick={async () => {
-                        try {
-                            await deleteCategory(parsedCategoryId);
-                            navigate('/categories');
-                        } catch (err) {
-                            const error = err as AxiosError;
-                            setGlobalError(error);
-                        }
-                    }}>Remove
+                {isEditForm && <Button type="button"
+                                       className="category-form__button category-form__button--delete"
+                                       onClick={() => {
+                                           setIsModalOpen(true);
+                                       }}>Remove
                     category</Button>}
                 <Button className="category-form__button">Submit</Button>
-            </form>
 
+            </form>
+            <PasswordModal
+                handleCorrectPasswordSubmit={handleCategoryDeletion}
+                setIsOpen={setIsModalOpen}
+                isOpen={isModalOpen}/>
         </div>
     );
 };
