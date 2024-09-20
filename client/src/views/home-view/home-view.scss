@@ -1,0 +1,28 @@
+@import '@/mixins';
+
+.home-view {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column-reverse;
+  gap: 30px;
+  @include md {
+    flex-direction: row;
+  }
+
+  &__image {
+    width: clamp(300px, 50vw, 600px);
+  }
+
+  &__info {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  &__button-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+  }
+}
