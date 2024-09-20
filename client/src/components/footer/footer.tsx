@@ -10,7 +10,7 @@ const Footer = () => {
     return (
         <footer className="footer">
             <span className="footer__credit-wrapper">
-            <p className="footer__paragraph">Create by Deepscapediver </p>
+            <p className="footer__paragraph">Created by Deepspacediver </p>
             <CustomNavlink className="footer__link footer__link--with-icon"
                            path={gitHubLink}>
                 <img alt={'github project'} className="footer__icon"
