@@ -15,4 +15,11 @@
   &__button-container {
     display: flex;
   }
+
+  &__button {
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
 }

@@ -49,7 +49,7 @@ export const routes: RouteObject[] = [
                         element: <ShoesView/>
                     },
                     {
-                        path: 'add-item',
+                        path: 'add-shoe',
                         element: <ShoeForm/>
                     }, {
                         path: ':shoeId',

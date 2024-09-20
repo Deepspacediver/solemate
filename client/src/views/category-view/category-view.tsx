@@ -56,8 +56,14 @@ const CategoryView = () => {
                 <p className="category-view__description">{categoryDescription ?? ''}</p>
             </div>
             <div className="category-view__button-container">
-                <Button variant={ButtonVariants.PRIMARY} isNavlink
+                <Button className="category-view__button"
+                        variant={ButtonVariants.PRIMARY} isNavlink
                         path="edit-category">Edit
+                    category</Button>
+                <Button className="category-view__button"
+                        variant={ButtonVariants.PRIMARY} isNavlink
+                        path="/shoes/add-shoe"
+                        state={{categoryId: parsedCategoryId}}>Add shoe to
                     category</Button>
             </div>
 

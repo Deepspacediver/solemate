@@ -18,7 +18,7 @@ import {
     ShoeWithCategoriesType
 } from "@/types/shoe-types.ts";
 import {AxiosError} from "axios";
-import {useNavigate, useParams} from "react-router-dom";
+import {useLocation, useNavigate, useParams} from "react-router-dom";
 import PasswordModal from "@components/password-modal/password-modal.tsx";
 
 const createShoeSchema = z.object({
@@ -60,6 +60,8 @@ const ShoeForm = () => {
     const navigate = useNavigate();
     const {shoeId} = useParams();
     const parsedShoeId = shoeId ? +shoeId : null;
+    const {state} = useLocation();
+    const passedCategoryId = state?.categoryId ?? null;
 
     const isValueInCheckedIds = (id: number) => {
         return checkedIds.includes(id);
@@ -119,6 +121,8 @@ const ShoeForm = () => {
                     setShoeData(shoeDetails);
                     const categoryIdsInShoe = shoeDetails?.categories.map((category) => category.categoryId);
                     setCheckedIds(categoryIdsInShoe);
+                } else if (passedCategoryId) {
+                    setCheckedIds([passedCategoryId]);
                 }
             } catch (err) {
                 const error = err as AxiosError;

@@ -44,6 +44,7 @@ const CategoryForm = () => {
 
     const {categoryId} = useParams();
     const parsedCategoryId = categoryId ? +categoryId : null;
+
     const isEditForm = !!parsedCategoryId;
 
     const setGlobalError = (error: AxiosError) => {

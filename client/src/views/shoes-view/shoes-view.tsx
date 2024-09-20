@@ -41,8 +41,8 @@ const ShoesView = () => {
     return (
         <div className="shoes-view">
             <h2 className="shoes-view__heading">All shoes</h2>
-            <Button className="shoes-view__button" isNavlink path={'add-item'}>Add
-                item</Button>
+            <Button className="shoes-view__button" isNavlink path={'add-shoe'}>Add
+                shoe</Button>
             <ItemWrapper>
                 {!!shoes.length && shoes.map(({shoe_id, name, picture}) => (
                     <PreviewItem key={shoe_id} name={name} picture={picture}

@@ -12,7 +12,8 @@ type ButtonPros =
         isNavlink?: boolean,
         path?: string,
         children: ReactNode,
-        variant?: ButtonVariants
+        variant?: ButtonVariants,
+        state?: {}
     }
     & ButtonHTMLAttributes<HTMLButtonElement>;
 
@@ -22,13 +23,16 @@ const Button = ({
                     children,
                     className,
                     variant,
+                    state,
                     ...rest
                 }: ButtonPros) => {
     return (
         isNavlink && path ?
             (<NavLink
                 className={clsx('button', variant && `button--${variant}`, className)}
-                to={path}>
+                to={path}
+                state={state}
+            >
                 {children}
             </NavLink>) :
             (<button {...rest} className={clsx(className, 'button')}>
