@@ -2,22 +2,23 @@
 
 :root {
   --col-primary: #020202;
-  --col-secondary: #eaddd0;
-  --col-light-gray: #b1b0aa;
+  --col-secondary: #eef1f2;
 
-  --col-light-beige: #f5e8d3;
+  --col-light-beige: #FFEAC5;
   --col-white: #ffff;
 
   --font-family: "Ubuntu";
 
   --box-shadow: 2px -1px 24px -9px rgba(66, 68, 90, 1);
+
 }
 
 html {
   font-family: var(--font-family), sans-serif;
-  background-color: var(--col-light-beige);
+  background-color: var(--col-secondary);
+  height: 100%;
 }
 
-body {
-
+body, #root {
+  height: 100%;
 }
