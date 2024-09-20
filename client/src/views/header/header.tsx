@@ -15,7 +15,9 @@ const navLinks: { name: string, path: string }[] = [{
 const Header = () => {
     return (
         <header className="header">
-            <h1 className="header__heading">Solemate</h1>
+            <CustomNavlink path="/">
+                <h1 className="header__heading">Solemate</h1>
+            </CustomNavlink>
             <nav>
                 <ul className="header__link-container">
                     {navLinks.map(({path, name}) => (
