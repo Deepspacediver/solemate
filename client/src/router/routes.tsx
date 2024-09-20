@@ -6,12 +6,17 @@ import ShoesView from "@views/shoes-view/shoes-view.tsx";
 import ShoeForm from "@components/shoe-form/shoe-form.tsx";
 import CategoryView from "@views/category-view/category-view.tsx";
 import ShoeDetails from "@components/shoe-details/shoe-details.tsx";
+import HomeView from "@views/home-view/home-view.tsx";
 
 export const routes: RouteObject[] = [
     {
         path: '/',
         element: <Layout/>,
         children: [
+            {
+                path: '',
+                element: <HomeView/>
+            },
             {
                 path: 'categories',
                 element: <Outlet/>,
