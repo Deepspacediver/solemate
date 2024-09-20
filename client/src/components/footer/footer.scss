@@ -1,0 +1,40 @@
+@import '@/mixins';
+
+.footer {
+  height: 50px;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  margin-top: auto;
+  padding: 5px;
+  font-size: 12px;
+  flex-direction: column;
+  gap: 5px;
+  @include sm {
+    padding: 10px;
+    flex-direction: row;
+  }
+
+
+  &__credit-wrapper {
+    display: flex;
+    gap: 5px;
+    align-items: center;
+  }
+
+  &__icon {
+    width: 22px;
+  }
+
+  &__paragraph {
+    //max-width: min-content;
+  }
+
+
+  &__link {
+    //&--with-icon {
+    //  display: inline-block;
+    //width: 24px;
+    //}
+  }
+}
