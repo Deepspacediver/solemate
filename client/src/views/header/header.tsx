@@ -22,7 +22,9 @@ const Header = () => {
                 <ul className="header__link-container">
                     {navLinks.map(({path, name}) => (
                         <CustomNavlink className="header__link" key={name}
-                                       path={path} name={name}/>
+                                       path={path}><span
+                            className="header__link-text">{name}</span>
+                        </CustomNavlink>
                     ))}
                 </ul>
             </nav>
