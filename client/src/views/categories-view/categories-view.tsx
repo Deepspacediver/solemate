@@ -5,6 +5,7 @@ import '@views/categories-view/categories-view.scss';
 import Button from "@components/button/button.tsx";
 import PreviewItem from "@components/preview-item/preview-item.tsx";
 import ItemWrapper from "@components/item-wrapper/item-wrapper.tsx";
+import SkeletonPreview from "@components/skeleton-preview/skeleton-preview.tsx";
 
 const CategoriesView = () => {
     const [categories, setCategories] = useState<CategoryAPIType[]>([]);
@@ -32,24 +33,27 @@ const CategoriesView = () => {
         };
     }, []);
 
-    if (isLoading) {
-        return <div>Loading...</div>;
-    }
 
     return (
         <div className="categories">
             <h2 className="categories__heading">Categories of shoes</h2>
+
             <Button isNavlink path="add-category"
                     className="categories__button">Add category</Button>
             <ItemWrapper>
-                {!!categories.length && categories.map(({
-                                                            category_id,
-                                                            name,
-                                                            picture
-                                                        }) => (
-                    <PreviewItem path={`${category_id}`} key={category_id}
+                {isLoading && Array.from({length: 8}).map((_, index) =>
+                    <SkeletonPreview key={index}/>)}
+
+                {!!categories.length && !isLoading && categories.map(({
+                                                                          category_id,
+                                                                          name,
+                                                                          picture
+                                                                      }) => (
+                    <PreviewItem path={`${category_id}`}
+                                 key={category_id}
                                  name={name} picture={picture}
                     />
+
 
                 ))}
             </ItemWrapper>
