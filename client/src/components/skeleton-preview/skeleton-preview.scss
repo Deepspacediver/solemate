@@ -1,0 +1,33 @@
+.skeleton-preview {
+
+
+  height: 350px;
+  width: clamp(250px, 30vw, 280px);
+  border-radius: 10px;
+  box-shadow: var(--box-shadow);
+  display: flex;
+  flex-direction: column;
+
+  &__image {
+    min-width: 250px;
+    height: 275px;
+    animation: 1s skeleton-animation linear alternate infinite;
+  }
+
+  &__text {
+    width: 80%;
+    background-color: hsla(70, 5%, 81%, 0.7);
+    height: 20px;
+    margin: auto auto auto 5px;
+    border-radius: 10px;
+  }
+}
+
+@keyframes skeleton-animation {
+  from {
+    background-color: hsla(70, 5%, 81%, 0.7);
+  }
+  to {
+    background-color: hsla(171, 27%, 91%, 0.7)
+  }
+}
