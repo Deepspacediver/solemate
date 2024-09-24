@@ -20,6 +20,7 @@ import {
 import {AxiosError} from "axios";
 import {useLocation, useNavigate, useParams} from "react-router-dom";
 import PasswordModal from "@components/password-modal/password-modal.tsx";
+import Loader from "@components/loader/loader.tsx";
 
 const createShoeSchema = z.object({
     name: z.string().min(5, "Name must have at least 5 characters"),
@@ -141,7 +142,7 @@ const ShoeForm = () => {
 
 
     if (isLoading) {
-        return <div>Loading...</div>;
+        return <Loader/>;
     }
 
 

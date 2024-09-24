@@ -13,6 +13,7 @@ import Textarea from "@components/textarea/textarea.tsx";
 import {useNavigate, useParams} from "react-router-dom";
 import {AxiosError} from "axios";
 import PasswordModal from "@components/password-modal/password-modal.tsx";
+import Loader from "@components/loader/loader.tsx";
 
 const categorySchema = z.object({
     name: z.string({message: "Name is required"}).min(4, {message: 'Name is too short'}).trim(),
@@ -98,7 +99,7 @@ const CategoryForm = () => {
     const {name, description, picture} = categoryData ?? {};
 
     if (isLoading) {
-        return <div>Loading...</div>;
+        return <Loader/>;
     }
 
     return (

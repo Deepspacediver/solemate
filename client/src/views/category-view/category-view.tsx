@@ -6,6 +6,9 @@ import {CategoryWithShoesAPIType} from "@/types/category-types.ts";
 import PreviewItem from "@components/preview-item/preview-item.tsx";
 import ItemWrapper from "@components/item-wrapper/item-wrapper.tsx";
 import Button, {ButtonVariants} from "@components/button/button.tsx";
+import {
+    showSkeletonsWhileLoading
+} from "@/helpers/show-skeletons-while-loading.tsx";
 
 
 const CategoryView = () => {
@@ -40,9 +43,6 @@ const CategoryView = () => {
     }, []);
 
 
-    if (isLoading) {
-        return <div>Loading...</div>;
-    }
     const {
         name: categoryName,
         description: categoryDescription
@@ -68,6 +68,7 @@ const CategoryView = () => {
             </div>
 
             <ItemWrapper>
+                {isLoading && showSkeletonsWhileLoading()}
                 {!!shoesArray.length && shoesArray.map(({
                                                             shoe_id,
                                                             picture,

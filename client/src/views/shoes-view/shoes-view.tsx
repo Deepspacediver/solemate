@@ -5,6 +5,9 @@ import {useEffect, useState} from "react";
 import {ShoeAPIType} from "@/types/shoe-types.ts";
 import PreviewItem from "@components/preview-item/preview-item.tsx";
 import ItemWrapper from "@components/item-wrapper/item-wrapper.tsx";
+import {
+    showSkeletonsWhileLoading
+} from "@/helpers/show-skeletons-while-loading.tsx";
 
 
 const ShoesView = () => {
@@ -34,9 +37,6 @@ const ShoesView = () => {
 
     }, []);
 
-    if (isLoading) {
-        return <div>Loading...</div>;
-    }
 
     return (
         <div className="shoes-view">
@@ -44,6 +44,7 @@ const ShoesView = () => {
             <Button className="shoes-view__button" isNavlink path={'add-shoe'}>Add
                 shoe</Button>
             <ItemWrapper>
+                {isLoading && showSkeletonsWhileLoading()}
                 {!!shoes.length && shoes.map(({shoe_id, name, picture}) => (
                     <PreviewItem key={shoe_id} name={name} picture={picture}
                                  path={`${shoe_id}`}/>))}

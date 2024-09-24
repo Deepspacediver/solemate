@@ -6,6 +6,7 @@ import {useParams} from "react-router-dom";
 import {AxiosError} from "axios";
 import placeholderImgSource from '@/assets/images/category-placeholder.png';
 import Button from "@components/button/button.tsx";
+import Loader from "@components/loader/loader.tsx";
 
 
 const ShoeDetails = () => {
@@ -44,7 +45,7 @@ const ShoeDetails = () => {
 
 
     if (isLoading) {
-        return <div>Loading...</div>;
+        return <Loader/>;
     }
 
     return (

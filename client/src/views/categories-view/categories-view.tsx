@@ -5,7 +5,9 @@ import '@views/categories-view/categories-view.scss';
 import Button from "@components/button/button.tsx";
 import PreviewItem from "@components/preview-item/preview-item.tsx";
 import ItemWrapper from "@components/item-wrapper/item-wrapper.tsx";
-import SkeletonPreview from "@components/skeleton-preview/skeleton-preview.tsx";
+import {
+    showSkeletonsWhileLoading
+} from "@/helpers/show-skeletons-while-loading.tsx";
 
 const CategoriesView = () => {
     const [categories, setCategories] = useState<CategoryAPIType[]>([]);
@@ -41,9 +43,7 @@ const CategoriesView = () => {
             <Button isNavlink path="add-category"
                     className="categories__button">Add category</Button>
             <ItemWrapper>
-                {isLoading && Array.from({length: 8}).map((_, index) =>
-                    <SkeletonPreview key={index}/>)}
-
+                {isLoading && showSkeletonsWhileLoading()}
                 {!!categories.length && !isLoading && categories.map(({
                                                                           category_id,
                                                                           name,
