@@ -10,8 +10,31 @@
     flex-direction: row;
   }
 
+  &__image-wrapper {
+    width: 280px;
+    height: 270px;
+    @include sm {
+      width: 340px;
+      height: 320px;
+    }
+
+    @include md {
+      height: 460px;
+      width: 465px;
+    }
+    @include lg {
+      height: 600px;
+      width: 600px;
+    }
+
+    &--loading {
+      animation: 1s skeleton-animation linear alternate infinite;
+
+    }
+
+  }
+
   &__image {
-    width: clamp(300px, 50vw, 600px);
   }
 
   &__info {
@@ -24,5 +47,14 @@
     display: flex;
     align-items: center;
     justify-content: space-around;
+  }
+}
+
+@keyframes skeleton-animation {
+  from {
+    background-color: hsla(70, 5%, 81%, 0.7);
+  }
+  to {
+    background-color: hsla(171, 27%, 91%, 0.7)
   }
 }
