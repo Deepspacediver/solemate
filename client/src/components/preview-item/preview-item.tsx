@@ -24,7 +24,7 @@ const PreviewItem = ({path, picture, name}: PreviewItemProps) => {
                         imageRef.current.classList?.remove("preview-item__image--loading");
                     }}
                          className="preview-item__image preview-item__image--loading"
-                         src={previewImagePlaceholderSrc || picture}
+                         src={picture || previewImagePlaceholderSrc}
                          ref={imageRef}
                          alt={name}/>
                 </div>
