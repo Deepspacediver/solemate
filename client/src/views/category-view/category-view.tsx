@@ -13,7 +13,7 @@ import {
 
 const CategoryView = () => {
 
-    const [isLoading, setIsLoading] = useState(false);
+    const [isLoading, setIsLoading] = useState(true);
     const [categoryWithShoes, setCategoryWithShoes] = useState<CategoryWithShoesAPIType | null>(null);
     const {categoryId} = useParams();
     const parsedCategoryId = categoryId ? +categoryId : null;
@@ -21,10 +21,12 @@ const CategoryView = () => {
     useEffect(() => {
         const abortController = new AbortController();
         const getShoesFromCategory = async () => {
-            if (!parsedCategoryId) return;
+            if (!parsedCategoryId) {
+                setIsLoading(false);
+                return;
+            }
 
             try {
-                setIsLoading(true);
                 const data = await getCategoryWithShoes(parsedCategoryId, abortController.signal);
                 setCategoryWithShoes(data);
             } catch (err) {

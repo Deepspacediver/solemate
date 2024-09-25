@@ -47,7 +47,7 @@ type ShoeFormErrors = {
 const ShoeForm = () => {
     const [categoryOptions, setCategoryOptions] = useState<CategoryOption[]>([]);
     const [shoeData, setShoeData] = useState<ShoeWithCategoriesType | null>(null);
-    const [isLoading, setIsLoading] = useState(false);
+    const [isLoading, setIsLoading] = useState(true);
     const [checkedIds, setCheckedIds] = useState<number[]>([]);
     const [errors, setErrors] = useState<ShoeFormErrors>({
         name: [],
@@ -107,7 +107,6 @@ const ShoeForm = () => {
         const abortController = new AbortController();
         const getCategoryOptions = async () => {
             try {
-                setIsLoading(true);
                 const categories = await getAllCategories(abortController.signal);
                 const categoriesAsOptions = categories.map(({
                                                                 category_id,

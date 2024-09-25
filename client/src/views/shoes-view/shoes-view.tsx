@@ -12,13 +12,12 @@ import {
 
 const ShoesView = () => {
     const [shoes, setShoes] = useState<ShoeAPIType[]>([]);
-    const [isLoading, setIsLoading] = useState(false);
+    const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
         const controller = new AbortController();
         const getShoes = async () => {
             try {
-                setIsLoading(true);
                 const shoesData = await getAllShoes(controller.signal);
                 setShoes(shoesData);
 

@@ -12,7 +12,7 @@ import Loader from "@components/loader/loader.tsx";
 const ShoeDetails = () => {
     const [shoeData, setShoeData] = useState<ShoeWithCategoriesType | null>(null);
     const [error, setError] = useState('');
-    const [isLoading, setIsLoading] = useState(false);
+    const [isLoading, setIsLoading] = useState(true);
     const {shoeId} = useParams();
     const parsedShoeId = shoeId ? +shoeId : null;
 
@@ -20,6 +20,7 @@ const ShoeDetails = () => {
         const abortController = new AbortController();
         const getShoeDetails = async () => {
             if (!parsedShoeId) {
+                setIsLoading(false);
                 return;
             }
             try {
