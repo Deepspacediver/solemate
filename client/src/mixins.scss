@@ -20,3 +20,15 @@ $lg-breakpoint: 1200px;
     @content
   }
 }
+
+@mixin skeleton-animation {
+  @keyframes skeleton-animation {
+    from {
+      background-color: hsla(70, 5%, 81%, 0.7);
+    }
+    to {
+      background-color: hsla(171, 27%, 91%, 0.7)
+    }
+  }
+  animation: 1s skeleton-animation linear alternate infinite;
+}
