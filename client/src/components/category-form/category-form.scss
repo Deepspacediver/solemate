@@ -2,6 +2,7 @@
   background-color: var(--col-secondary);
   border: 1px solid var(--col-primary);
   border-radius: 10px;
+  width: clamp(200px, 90%, 600px);
   max-width: 500px;
   margin: 20px auto;
   padding: 20px;

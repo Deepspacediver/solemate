@@ -73,7 +73,11 @@ const CategoryForm = () => {
     useEffect(() => {
         const abortController = new AbortController();
         const getCategoryInfo = async () => {
-            if (!isEditForm) return;
+            if (!isEditForm) {
+                setIsLoading(false);
+                return;
+            }
+
             try {
                 setIsLoading(true);
                 const data = await getCategory(parsedCategoryId, abortController.signal);
