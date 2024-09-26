@@ -7,6 +7,7 @@ import {AxiosError} from "axios";
 import placeholderImgSource from '@/assets/images/category-placeholder.png';
 import Button from "@components/button/button.tsx";
 import Loader from "@components/loader/loader.tsx";
+import LoadImage from "@components/load-image/load-image.tsx";
 
 
 const ShoeDetails = () => {
@@ -53,10 +54,11 @@ const ShoeDetails = () => {
         <div className="shoe-details">
             {!!error && <p className="shoe-details__error">{error}</p>}
             <div className="shoe-details__info">
-                <div className="shoe-details__image-wrapper">
-                    <img alt={shoeData?.name}
-                         src={!shoeData?.picture ? placeholderImgSource : shoeData.picture}/>
-                </div>
+                <LoadImage
+                    wrapperClassName="shoe-details__image-wrapper"
+                    imageClassName="shoe-details__image"
+                    src={shoeData?.picture || placeholderImgSource}
+                    altText={shoeData?.name ?? 'shoe'}/>
                 <div className="shoe-details__details">
                     <h2>{shoeData?.name}</h2>
                     <p>{shoeData?.description}</p>

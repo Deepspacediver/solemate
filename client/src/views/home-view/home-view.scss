@@ -26,15 +26,6 @@
       height: 600px;
       width: 600px;
     }
-
-    &--loading {
-      animation: 1s skeleton-animation linear alternate infinite;
-
-    }
-
-  }
-
-  &__image {
   }
 
   &__info {
@@ -47,14 +38,5 @@
     display: flex;
     align-items: center;
     justify-content: space-around;
-  }
-}
-
-@keyframes skeleton-animation {
-  from {
-    background-color: hsla(70, 5%, 81%, 0.7);
-  }
-  to {
-    background-color: hsla(171, 27%, 91%, 0.7)
   }
 }
