@@ -1,3 +1,5 @@
+@import '@/mixins';
+
 .skeleton-preview {
 
 
@@ -11,7 +13,7 @@
   &__image {
     min-width: 250px;
     height: 275px;
-    animation: 1s skeleton-animation linear alternate infinite;
+    @include skeleton-animation;
   }
 
   &__text {
@@ -20,14 +22,5 @@
     height: 20px;
     margin: auto auto auto 5px;
     border-radius: 10px;
-  }
-}
-
-@keyframes skeleton-animation {
-  from {
-    background-color: hsla(70, 5%, 81%, 0.7);
-  }
-  to {
-    background-color: hsla(171, 27%, 91%, 0.7)
   }
 }
