@@ -1,3 +1,5 @@
+@import '@/mixins';
+
 .category-view {
   display: flex;
   flex-direction: column;
@@ -14,6 +16,11 @@
 
   &__button-container {
     display: flex;
+    gap: 5px;
+    justify-content: center;
+    @include sm {
+      gap: 20px;
+    }
   }
 
   &__button {
@@ -21,5 +28,6 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    margin: 0;
   }
 }
