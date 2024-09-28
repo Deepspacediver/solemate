@@ -8,8 +8,13 @@ enum ShoeRoutes {
     INDEX = '/shoes'
 }
 
-export const getAllShoes = async (signal: AbortSignal) => {
-    const {data} = await axiosClient.get<ShoeAPIType[]>(`${ShoeRoutes.INDEX}`, {signal});
+export const getAllShoes = async (signal: AbortSignal, lastShoeId?: number) => {
+    const {data} = await axiosClient.get<ShoeAPIType[]>(`${ShoeRoutes.INDEX}`, {
+        signal,
+        params: {
+            lastShoeId
+        }
+    });
 
     return data;
 };
@@ -20,7 +25,7 @@ export const getShoeById = async (shoeId: number, signal: AbortSignal) => {
 };
 
 export const createShoe = async (shoe: CreateShoeType) => {
-    const {data} = await axiosClient.post(`${ShoeRoutes.INDEX}`, {...shoe});
+    const {data} = await axiosClient.post(`${ShoeRoutes.INDEX}`, {...shoe},);
     return data;
 };
 
