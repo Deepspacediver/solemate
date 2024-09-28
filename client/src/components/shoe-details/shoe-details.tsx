@@ -31,8 +31,9 @@ const ShoeDetails = () => {
 
             } catch (err) {
                 const error = err as AxiosError;
+                const genericError = error.message === 'canceled' ? '' : error.message;
                 const errorData = error?.response?.data as { error: string };
-                setError(errorData?.error ?? error.message != 'canceled' ? error.message : '    ');
+                setError(errorData?.error ?? genericError);
             } finally {
                 setIsLoading(false);
             }
