@@ -30,3 +30,9 @@ export const UpdateShoeSchema = CreateShoeSchema.extend({
         shoeId: ShoeIdSchema
     })
 });
+
+export const GetShoesWithPagination = z.object({
+    query: z.object({
+        lastShoeId: z.union([ShoeIdSchema, z.literal(undefined)])
+    })
+});

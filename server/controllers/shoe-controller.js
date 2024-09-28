@@ -2,7 +2,7 @@ import asyncHandler from "express-async-handler";
 import {parseRequestZod} from "../helpers/schema-parser.js";
 import {
     CreateShoeSchema,
-    GetShoeSchema,
+    GetShoeSchema, GetShoesWithPagination,
     UpdateShoeSchema
 } from "../schema/shoe-schema.js";
 import {
@@ -13,7 +13,9 @@ import {
 } from "../db/queries/shoe-queries.js";
 
 export const shoesGet = asyncHandler(async (req, res) => {
-    const data = await getShoes();
+    parseRequestZod(GetShoesWithPagination, req);
+    const {lastShoeId} = req.query;
+    const data = await getShoes(lastShoeId);
     res.json(data);
 
 });
@@ -22,7 +24,8 @@ export const shoeByIdGet = asyncHandler(async (req, res) => {
     parseRequestZod(GetShoeSchema, req);
     const {shoeId} = req.params;
     const data = await getShoe(shoeId);
-    if (!data) {
+    console.log(data);
+    if (!data.shoe_id) {
         res.status(404).json({error: 'Shoe not found'});
     }
     res.json(data);
