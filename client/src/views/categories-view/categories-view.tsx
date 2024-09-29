@@ -1,5 +1,5 @@
 import {getAllCategories} from "@/services/category-services.ts";
-import {useEffect, useState} from "react";
+import {useEffect, useRef, useState} from "react";
 import {CategoryAPIType} from "@/types/category-types.ts";
 import '@views/categories-view/categories-view.scss';
 import Button from "@components/button/button.tsx";
@@ -8,20 +8,32 @@ import ItemWrapper from "@components/item-wrapper/item-wrapper.tsx";
 import {
     showSkeletonsWhileLoading
 } from "@/helpers/show-skeletons-while-loading.tsx";
+import {FETCH_LIMIT} from "@views/shoes-view/shoes-view.tsx";
+import useIntersectionObserver from "@/hooks/use-intersection-observer.tsx";
 
 const CategoriesView = () => {
     const [categories, setCategories] = useState<CategoryAPIType[]>([]);
+    const [areAllCategoriesLoaded, setAreaAllCategoriesLoaded] = useState(false);
+    const [lastCategoryId, setLastCategoryId] = useState<number | null>(null);
     const [isLoading, setIsLoading] = useState(true);
+
+    const lastPreviewItemRef = useRef<HTMLElement>(null);
 
 
     useEffect(() => {
+        if (areAllCategoriesLoaded) {
+            return;
+        }
         const controller = new AbortController();
 
         const getCategories = async () => {
             try {
                 setIsLoading(true);
-                const categories = await getAllCategories(controller.signal);
-                setCategories(categories);
+                const fetchedCategories = await getAllCategories(controller.signal, lastCategoryId);
+                if (fetchedCategories.length < FETCH_LIMIT) {
+                    setAreaAllCategoriesLoaded(true);
+                }
+                setCategories((prevCategories) => [...prevCategories, ...fetchedCategories]);
             } catch (err) {
                 console.error(err);
             } finally {
@@ -33,8 +45,19 @@ const CategoriesView = () => {
         return () => {
             controller.abort();
         };
-    }, []);
+    }, [lastCategoryId]);
 
+    const onIntersecting = () => {
+        if (!categories.length) {
+            return;
+        }
+        setLastCategoryId(categories[categories.length - 1].category_id);
+    };
+
+    useIntersectionObserver({
+        observedHTMLElement: lastPreviewItemRef,
+        intersectingCallback: onIntersecting
+    });
 
     return (
         <div className="categories">
@@ -43,19 +66,18 @@ const CategoriesView = () => {
             <Button isNavlink path="add-category"
                     className="categories__button">Add category</Button>
             <ItemWrapper>
-                {isLoading && showSkeletonsWhileLoading()}
-                {!!categories.length && !isLoading && categories.map(({
-                                                                          category_id,
-                                                                          name,
-                                                                          picture
-                                                                      }) => (
+                {!!categories.length && categories.map(({
+                                                            category_id,
+                                                            name,
+                                                            picture
+                                                        }, index) => (
                     <PreviewItem path={`${category_id}`}
                                  key={category_id}
                                  name={name} picture={picture}
+                                 ref={index === categories.length - 1 ? lastPreviewItemRef : null}
                     />
-
-
                 ))}
+                {isLoading && showSkeletonsWhileLoading(5)}
             </ItemWrapper>
         </div>
     );

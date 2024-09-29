@@ -1,5 +1,5 @@
 import '@views/category-view/category-view.scss';
-import {useEffect, useState} from "react";
+import {useEffect, useRef, useState} from "react";
 import {getCategoryWithShoes} from "@/services/category-services.ts";
 import {useParams} from "react-router-dom";
 import {CategoryWithShoesAPIType} from "@/types/category-types.ts";
@@ -9,16 +9,25 @@ import Button, {ButtonVariants} from "@components/button/button.tsx";
 import {
     showSkeletonsWhileLoading
 } from "@/helpers/show-skeletons-while-loading.tsx";
+import {FETCH_LIMIT} from "@views/shoes-view/shoes-view.tsx";
+import useIntersectionObserver from "@/hooks/use-intersection-observer.tsx";
 
 
 const CategoryView = () => {
 
     const [isLoading, setIsLoading] = useState(true);
     const [categoryWithShoes, setCategoryWithShoes] = useState<CategoryWithShoesAPIType | null>(null);
+    const [lastShoeId, setLastShoeId] = useState<number | null>(null);
+    const [areAllShoesFetched, setAreAllShoesFetched] = useState(false);
     const {categoryId} = useParams();
     const parsedCategoryId = categoryId ? +categoryId : null;
 
+    const lastPreviewItemRef = useRef<HTMLElement | null>(null);
+
     useEffect(() => {
+        if (areAllShoesFetched) {
+            return;
+        }
         const abortController = new AbortController();
         const getShoesFromCategory = async () => {
             if (!parsedCategoryId) {
@@ -27,8 +36,15 @@ const CategoryView = () => {
             }
 
             try {
-                const data = await getCategoryWithShoes(parsedCategoryId, abortController.signal);
-                setCategoryWithShoes(data);
+                const data = await getCategoryWithShoes(parsedCategoryId, lastShoeId, abortController.signal);
+                if (data.shoes.length < FETCH_LIMIT) {
+                    setAreAllShoesFetched(true);
+                }
+                setCategoryWithShoes((prevState) => !prevState ? data :
+                    ({
+                        ...prevState,
+                        shoes: [...prevState.shoes, ...data.shoes]
+                    }));
             } catch (err) {
                 console.error(err);
             } finally {
@@ -44,12 +60,23 @@ const CategoryView = () => {
 
     }, []);
 
-
     const {
         name: categoryName,
         description: categoryDescription
     } = categoryWithShoes?.category ?? {};
     const shoesArray = categoryWithShoes?.shoes ?? [];
+
+    const onIntersecting = () => {
+        if (!shoesArray.length) {
+            return;
+        }
+        setLastShoeId(shoesArray[shoesArray.length - 1].shoe_id);
+    };
+
+    useIntersectionObserver({
+        observedHTMLElement: lastPreviewItemRef,
+        intersectingCallback: onIntersecting
+    });
 
     return (
         <div className="category-view">
@@ -75,9 +102,10 @@ const CategoryView = () => {
                                                             shoe_id,
                                                             picture,
                                                             name
-                                                        }) => {
+                                                        }, index) => {
                     return <PreviewItem key={shoe_id} path={`/shoes/${shoe_id}`}
-                                        name={name} picture={picture}/>;
+                                        name={name} picture={picture}
+                                        ref={index === shoesArray.length - 1 ? lastPreviewItemRef : null}/>;
                 })}
 
             </ItemWrapper>

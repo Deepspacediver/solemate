@@ -14,8 +14,13 @@ enum CategoryRoutes {
     CATEGORY_DATA = '/category-data',
 }
 
-export const getAllCategories = async (signal: AbortSignal) => {
-    const {data} = await axiosClient.get<CategoryAPIType[]>(CategoryRoutes.CATEGORIES, {signal});
+export const getAllCategories = async (signal: AbortSignal, lastCategoryId: number | null) => {
+    const {data} = await axiosClient.get<CategoryAPIType[]>(CategoryRoutes.CATEGORIES, {
+        signal,
+        params: {
+            lastCategoryId
+        }
+    });
     return data;
 };
 
@@ -68,7 +73,12 @@ export const deleteCategory = async (categoryId: number) => {
     return data;
 };
 
-export const getCategoryWithShoes = async (categoryId: number, signal: AbortSignal) => {
-    const {data} = await axiosClient.get<CategoryWithShoesAPIType>(`${CategoryRoutes.CATEGORIES}${CategoryRoutes.WITH_SHOES}/${categoryId}`, {signal});
+export const getCategoryWithShoes = async (categoryId: number, lastShoeId: number | null, signal: AbortSignal) => {
+    const {data} = await axiosClient.get<CategoryWithShoesAPIType>(`${CategoryRoutes.CATEGORIES}${CategoryRoutes.WITH_SHOES}/${categoryId}`, {
+        signal,
+        params: {
+            lastShoeId
+        }
+    });
     return data;
 };
