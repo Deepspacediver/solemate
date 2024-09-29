@@ -8,7 +8,9 @@ import ItemWrapper from "@components/item-wrapper/item-wrapper.tsx";
 import {
     showSkeletonsWhileLoading
 } from "@/helpers/show-skeletons-while-loading.tsx";
-import useFetchOnScroll from "@/hooks/use-intersection-observer.tsx";
+import useIntersectionObserver from "@/hooks/use-intersection-observer.tsx";
+
+export const FETCH_LIMIT = 15;
 
 
 const ShoesView = () => {
@@ -19,7 +21,6 @@ const ShoesView = () => {
 
     const lastShoeHTLMItemRef = useRef<HTMLElement>(null);
 
-    const shoesFetchLimit = 15;
 
     useEffect(() => {
         if (!areAllShoesFetched) {
@@ -30,7 +31,7 @@ const ShoesView = () => {
             try {
                 setIsLoading(true);
                 const shoesData = await getAllShoes(controller.signal, lastShoeId);
-                if (shoesData.length < shoesFetchLimit) {
+                if (shoesData.length < FETCH_LIMIT) {
                     setAreAllShoesFetched(false);
                 }
                 setShoes((prevShoes) => [...prevShoes, ...shoesData]);
@@ -54,11 +55,11 @@ const ShoesView = () => {
         if (!shoes.length) {
             return;
         }
-        setLastShoeId(shoes[shoes.length - 1]?.shoe_id ?? null);
+        setLastShoeId(shoes[shoes.length - 1]?.shoe_id);
     };
 
 
-    useFetchOnScroll({
+    useIntersectionObserver({
         observedHTMLElement: lastShoeHTLMItemRef,
         intersectingCallback: onIntersecting,
     });
