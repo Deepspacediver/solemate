@@ -16,6 +16,11 @@
   background-repeat: no-repeat;
   background-size: 100%;
 
+  &--disabled {
+    pointer-events: none;
+    border: 1px solid lightgray;
+  }
+
   &:hover {
     cursor: pointer;
     background-position: 0 0;
@@ -32,5 +37,24 @@
       width: 180px;
 
     }
+  }
+
+  &--submit {
+    padding: 10px 20px;
+    font-size: 20px;
+    font-weight: 500;
+    margin: 0 auto 30px auto;
+    width: 110px;
+    @include sm {
+      width: 180px;
+
+    }
+  }
+
+  &__icon {
+    @include rotate-animation;
+    margin: auto;
+    width: 30px;
+    height: 30px;
   }
 }

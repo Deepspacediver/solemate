@@ -2,9 +2,11 @@ import '@components/button/button.scss';
 import {ButtonHTMLAttributes, ReactNode,} from "react";
 import clsx from "clsx";
 import {NavLink} from "react-router-dom";
+import {LoaderSVG} from "@components/loader/loader.tsx";
 
 export enum ButtonVariants {
-    PRIMARY = 'primary'
+    PRIMARY = 'primary',
+    SUBMIT = 'submit',
 }
 
 type ButtonPros =
@@ -13,7 +15,8 @@ type ButtonPros =
         path?: string,
         children: ReactNode,
         variant?: ButtonVariants,
-        state?: {}
+        state?: {},
+        isLoading?: boolean,
     }
     & ButtonHTMLAttributes<HTMLButtonElement>;
 
@@ -24,19 +27,22 @@ const Button = ({
                     className,
                     variant,
                     state,
+                    isLoading,
                     ...rest
                 }: ButtonPros) => {
     return (
         isNavlink && path ?
             (<NavLink
+
                 className={clsx('button', variant && `button--${variant}`, className)}
                 to={path}
                 state={state}
             >
                 {children}
             </NavLink>) :
-            (<button {...rest} className={clsx(className, 'button')}>
-                {children}
+            (<button disabled={isLoading} {...rest}
+                     className={clsx(className, 'button', variant && `button--${variant}`, isLoading && 'button--disabled')}>
+                {isLoading ? <LoaderSVG className="button__icon"/> : children}
             </button>)
     );
 };
