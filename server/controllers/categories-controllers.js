@@ -3,12 +3,14 @@ import * as db from "../db/queries/category-queries.js";
 import {parseRequestZod} from "../helpers/schema-parser.js";
 import {
     categoryCreationSchema, categoryDeletionSchema,
-    categoryUpdateSchema, shoesWithCategorySchema
+    categoryUpdateSchema, GetCategoriesWithPagination, shoesWithCategorySchema
 } from "../schema/category-schema.js";
 
 
 export const categoriesGet = asyncHandler(async (req, res) => {
-    const rows = await db.getCategories();
+    parseRequestZod(GetCategoriesWithPagination, req);
+    const {lastCategoryId} = req.query;
+    const rows = await db.getCategories(lastCategoryId);
     res.json(rows);
 });
 
@@ -68,9 +70,10 @@ export const shoesWithoutCategoriesGet = asyncHandler(async (req, res) => {
 });
 
 export const categoryWithShoesGet = asyncHandler(async (req, res) => {
-    const {categoryId} = req.params;
     parseRequestZod(shoesWithCategorySchema, req);
-    const data = await db.getCategoryWithShoes(categoryId);
+    const {categoryId} = req.params;
+    const {lastShoeId} = req.query;
+    const data = await db.getCategoryWithShoes(categoryId, lastShoeId);
     res.json(data);
 });
 

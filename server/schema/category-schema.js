@@ -23,6 +23,10 @@ export const shoesWithCategorySchema = z.object({
     params: z.object({
         categoryId: z.coerce.number(
             {message: 'Category id must be a number'}),
+    }),
+    query: z.object({
+        lastShoeId: z.union([z.coerce.number(
+            {message: 'Shoe id must be a number'}), z.literal(undefined)])
     })
 });
 
@@ -41,5 +45,12 @@ export const categoryDeletionSchema = z.object({
     params: z.object({
         categoryId: z.coerce.number(
             {message: 'Category id must be a number'}),
+    })
+});
+
+export const GetCategoriesWithPagination = z.object({
+    query: z.object({
+        lastCategoryId: z.union([z.coerce.number(
+            {message: 'Category id must be a number'}), z.literal(undefined)])
     })
 });
