@@ -1,3 +1,5 @@
+@import '@/mixins';
+
 .loader {
   position: absolute;
   left: 50%;
@@ -5,17 +7,8 @@
   transform: translate(-50%, -50%);
 
   &__icon {
-    animation: 1s loader-animation linear infinite;
+    @include rotate-animation;
     width: 60px;
     height: 60px;
-  }
-}
-
-@keyframes loader-animation {
-  from {
-    rotate: 0deg;
-  }
-  to {
-    rotate: 360deg;
   }
 }

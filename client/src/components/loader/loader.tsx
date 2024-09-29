@@ -1,6 +1,6 @@
 import '@components/loader/loader.scss';
 
-const LoaderSVG = ({className}: { className: string }) => <svg
+export const LoaderSVG = ({className}: { className?: string }) => <svg
     className={className}
     xmlns="http://www.w3.org/2000/svg" width="24"
     height="24"
@@ -14,7 +14,6 @@ const LoaderSVG = ({className}: { className: string }) => <svg
 const Loader = () => {
     return (
         <div className="loader">
-
             <LoaderSVG className="loader__icon"/>
         </div>
     );
