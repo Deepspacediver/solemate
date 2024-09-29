@@ -30,5 +30,21 @@ $lg-breakpoint: 1200px;
       background-color: hsla(171, 27%, 91%, 0.7)
     }
   }
-  animation: 1s skeleton-animation linear alternate infinite;
+  & {
+    animation: 1s skeleton-animation linear alternate infinite;
+  }
+}
+
+@mixin rotate-animation {
+  @keyframes loader-animation {
+    from {
+      rotate: 0deg;
+    }
+    to {
+      rotate: 360deg;
+    }
+  }
+  & {
+    animation: 1s loader-animation linear infinite;
+  }
 }
