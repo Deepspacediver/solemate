@@ -174,6 +174,7 @@ const ShoeForm = () => {
                         navigate(`/shoes`);
                     }
                 } catch (err) {
+                    setIsSubmitting(false);
                     if (err instanceof ZodError) {
                         const fieldErrors = err.flatten().fieldErrors;
                         setErrors({
@@ -186,7 +187,6 @@ const ShoeForm = () => {
                         return;
                     }
                     const error = err as AxiosError;
-                    setIsSubmitting(false);
                     setGlobalError(error);
 
                 }

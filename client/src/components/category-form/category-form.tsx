@@ -132,6 +132,7 @@ const CategoryForm = () => {
                     }
                     navigate('/categories');
                 } catch (err) {
+                    setIsSubmitting(false);
                     if (err instanceof ZodError) {
                         const fieldErrors = err.flatten().fieldErrors;
                         setErrors({
@@ -142,7 +143,6 @@ const CategoryForm = () => {
                         return;
                     }
                     const error = err as AxiosError;
-                    setIsSubmitting(false);
                     setGlobalError(error);
                 }
             }}>
