@@ -50,7 +50,7 @@ export const getShoes = async (lastShoeId) => {
             'SELECT * FROM shoes ORDER BY shoe_id LIMIT 15') :
         await db.query(
             'SELECT * FROM shoes WHERE shoe_id > $1 ORDER BY shoe_id LIMIT 15',
-            [lastShoeId ?? null]);
+            [lastShoeId]);
     return rows;
 };
 
