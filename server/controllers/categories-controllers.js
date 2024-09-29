@@ -9,8 +9,8 @@ import {
 
 export const categoriesGet = asyncHandler(async (req, res) => {
     parseRequestZod(GetCategoriesWithPagination, req);
-    const {lastCategoryId} = req.query;
-    const rows = await db.getCategories(lastCategoryId);
+    const {lastCategoryId, fetchLimit} = req.query;
+    const rows = await db.getCategories(lastCategoryId, fetchLimit);
     res.json(rows);
 });
 

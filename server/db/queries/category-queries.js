@@ -1,13 +1,37 @@
 import * as db from '../pool.js';
 
-export const getCategories = async (lastCategoryId) => {
+export const getCategories = async (lastCategoryId, fetchLimit) => {
+    let result;
+    console.log({lastCategoryId, fetchLimit});
+    switch (true) {
+        case !!lastCategoryId && !!fetchLimit: {
+            result = await db.query(
+                `SELECT * FROM categories WHERE category_id > $1 ORDER BY category_id LIMIT $2`,
+                [lastCategoryId, fetchLimit]);
+            break;
 
-    const {rows} = !lastCategoryId ? await db.query(
-            `SELECT * FROM categories ORDER BY category_id LIMIT 15`) :
-        await db.query(
-            `SELECT * FROM categories WHERE category_id > $1 ORDER BY category_id LIMIT 15`,
-            [lastCategoryId]);
+        }
+        case !!lastCategoryId && !fetchLimit: {
+            result = await db.query(
+                `SELECT * FROM categories WHERE category_id > $1 ORDER BY category_id LIMIT 15`,
+                [lastCategoryId]);
 
+            break;
+        }
+        case !lastCategoryId && !!fetchLimit: {
+            result = await db.query(
+                `SELECT * FROM categories ORDER BY category_id LIMIT $1`,
+                [fetchLimit]);
+
+            break;
+        }
+        default: {
+            result = await db.query(
+                `SELECT * FROM categories ORDER BY category_id`);
+            break;
+        }
+    }
+    const {rows} = result ?? {};
     return rows ?? [];
 };
 
@@ -73,7 +97,7 @@ export const getCategoryWithShoes = async (categoryId, lastShoeId) => {
             JOIN shoes_with_categories AS shoe_cat ON shoes.shoe_id = shoe_cat.shoe_id 
             WHERE shoe_cat.category_id = $1 AND shoe_cat.shoe_id > $2 ORDER BY shoe_cat.shoe_id`,
                 [categoryId, lastShoeId]);
-    
+
     return {
         category: categoryData[0],
         shoes

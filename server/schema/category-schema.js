@@ -51,6 +51,8 @@ export const categoryDeletionSchema = z.object({
 export const GetCategoriesWithPagination = z.object({
     query: z.object({
         lastCategoryId: z.union([z.coerce.number(
-            {message: 'Category id must be a number'}), z.literal(undefined)])
+            {message: 'Category id must be a number'}), z.literal(undefined)]),
+        fetchLimit: z.union([z.coerce.number(
+            {message: 'Fetch must be a number'}), z.literal(undefined)])
     })
 });
