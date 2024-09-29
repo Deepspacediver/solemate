@@ -24,7 +24,6 @@ export const shoeByIdGet = asyncHandler(async (req, res) => {
     parseRequestZod(GetShoeSchema, req);
     const {shoeId} = req.params;
     const data = await getShoe(shoeId);
-    console.log(data);
     if (!data.shoe_id) {
         res.status(404).json({error: 'Shoe not found'});
     }

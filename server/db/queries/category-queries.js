@@ -2,7 +2,6 @@ import * as db from '../pool.js';
 
 export const getCategories = async (lastCategoryId, fetchLimit) => {
     let result;
-    console.log({lastCategoryId, fetchLimit});
     switch (true) {
         case !!lastCategoryId && !!fetchLimit: {
             result = await db.query(
