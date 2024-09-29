@@ -14,11 +14,12 @@ enum CategoryRoutes {
     CATEGORY_DATA = '/category-data',
 }
 
-export const getAllCategories = async (signal: AbortSignal, lastCategoryId: number | null) => {
+export const getAllCategories = async (signal: AbortSignal, lastCategoryId: number | null, fetchLimit: number | null) => {
     const {data} = await axiosClient.get<CategoryAPIType[]>(CategoryRoutes.CATEGORIES, {
         signal,
         params: {
-            lastCategoryId
+            lastCategoryId,
+            fetchLimit
         }
     });
     return data;

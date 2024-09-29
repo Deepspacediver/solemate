@@ -29,7 +29,7 @@ const CategoriesView = () => {
         const getCategories = async () => {
             try {
                 setIsLoading(true);
-                const fetchedCategories = await getAllCategories(controller.signal, lastCategoryId);
+                const fetchedCategories = await getAllCategories(controller.signal, lastCategoryId, FETCH_LIMIT);
                 if (fetchedCategories.length < FETCH_LIMIT) {
                     setAreaAllCategoriesLoaded(true);
                 }

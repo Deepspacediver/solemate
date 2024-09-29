@@ -1,8 +1,9 @@
 import '@/components/category-form/category-form.scss';
 import Input from "@components/input/input.tsx";
-import Button from "@components/button/button.tsx";
+import Button, {ButtonVariants} from "@components/button/button.tsx";
 import {
-    createCategory, deleteCategory,
+    createCategory,
+    deleteCategory,
     getCategory,
     updateCategory
 } from "@/services/category-services.ts";
@@ -36,6 +37,7 @@ const CategoryForm = () => {
 
     const [categoryData, setCategoryData] = useState<CategoryAPIType | null>(null);
     const [isLoading, setIsLoading] = useState(true);
+    const [isSubmitting, setIsSubmitting] = useState(false);
     const [errors, setErrors] = useState<CategoryErrors>({
         name: [],
         picture: [],
@@ -116,6 +118,7 @@ const CategoryForm = () => {
             <form className="category-form__form" onSubmit={async (e) => {
                 e.preventDefault();
                 try {
+                    setIsSubmitting(true);
                     const categoryFormData = new FormData(e.currentTarget);
                     const dataToSend = Object.fromEntries(categoryFormData) as CreateCategoryType;
                     categorySchema.parse(dataToSend);
@@ -139,6 +142,7 @@ const CategoryForm = () => {
                         return;
                     }
                     const error = err as AxiosError;
+                    setIsSubmitting(false);
                     setGlobalError(error);
                 }
             }}>
@@ -160,7 +164,10 @@ const CategoryForm = () => {
                                            setIsModalOpen(true);
                                        }}>Remove
                     category</Button>}
-                <Button className="category-form__button">Submit</Button>
+                <Button
+                    variant={ButtonVariants.SUBMIT}
+                    isLoading={isSubmitting}
+                    className="category-form__button">Submit</Button>
 
             </form>
             <PasswordModal

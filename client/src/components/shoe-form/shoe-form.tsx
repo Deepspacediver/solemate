@@ -2,7 +2,7 @@ import '@components/shoe-form/shoe-form.scss';
 import {z, ZodError} from "zod";
 import Checkbox from "@components/checkbox/checkbox.tsx";
 import {useEffect, useState} from "react";
-import Button from "@components/button/button.tsx";
+import Button, {ButtonVariants} from "@components/button/button.tsx";
 import Input from "@components/input/input.tsx";
 import Textarea from "@components/textarea/textarea.tsx";
 import {getAllCategories} from "@/services/category-services.ts";
@@ -13,10 +13,7 @@ import {
     getShoeById,
     updateShoe
 } from "@/services/shoe-services.ts";
-import {
-    CreateShoeType,
-    ShoeWithCategoriesType
-} from "@/types/shoe-types.ts";
+import {CreateShoeType, ShoeWithCategoriesType} from "@/types/shoe-types.ts";
 import {AxiosError} from "axios";
 import {useLocation, useNavigate, useParams} from "react-router-dom";
 import PasswordModal from "@components/password-modal/password-modal.tsx";
@@ -48,6 +45,7 @@ const ShoeForm = () => {
     const [categoryOptions, setCategoryOptions] = useState<CategoryOption[]>([]);
     const [shoeData, setShoeData] = useState<ShoeWithCategoriesType | null>(null);
     const [isLoading, setIsLoading] = useState(true);
+    const [isSubmitting, setIsSubmitting] = useState(false);
     const [checkedIds, setCheckedIds] = useState<number[]>([]);
     const [errors, setErrors] = useState<ShoeFormErrors>({
         name: [],
@@ -107,7 +105,7 @@ const ShoeForm = () => {
         const abortController = new AbortController();
         const getCategoryOptions = async () => {
             try {
-                const categories = await getAllCategories(abortController.signal);
+                const categories = await getAllCategories(abortController.signal, null, null);
                 const categoriesAsOptions = categories.map(({
                                                                 category_id,
                                                                 name
@@ -153,6 +151,7 @@ const ShoeForm = () => {
             <form className="shoe-form__form" onSubmit={async (e) => {
                 e.preventDefault();
                 try {
+                    setIsSubmitting(true);
                     const shoeFormData = new FormData(e.currentTarget);
                     const shoeDataObject = Object.fromEntries(shoeFormData);
                     const dataToSend = {
@@ -187,6 +186,7 @@ const ShoeForm = () => {
                         return;
                     }
                     const error = err as AxiosError;
+                    setIsSubmitting(false);
                     setGlobalError(error);
 
                 }
@@ -232,7 +232,12 @@ const ShoeForm = () => {
                     onClick={() => {
                         setIsModalOpen(true);
                     }}>Delete shoe</Button>}
-                <Button className="shoe-form__button">Submit</Button>
+                <Button
+                    isLoading={isSubmitting}
+                    variant={ButtonVariants.SUBMIT}
+                    className="shoe-form__button"
+                >Submit</Button>
+
             </form>
             <PasswordModal handleCorrectPasswordSubmit={handleShoeDeletion}
                            setIsOpen={setIsModalOpen}
