@@ -31,10 +31,11 @@ const password = process.env.POSTGRES_PASSWORD;
 const host = process.env.POSTGRES_HOST;
 const db = process.env.POSTGRES_DATABASE;
 const port = process.env.POSTGRES_PORT;
+const ssl = process.env.POSTGRES_SSL ?? '';
 
 async function main() {
     const myClient = new Client({
-        connectionString: `postgresql://${user}:${password}@${host}:${port}/${db}`,
+        connectionString: `postgresql://${user}:${password}@${host}:${port}/${db}${ssl ? `?sslmode=${ssl}` : ''}`,
     });
 
     await myClient.connect();
