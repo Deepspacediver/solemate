@@ -8,7 +8,9 @@ import {
 
 
 export const categoriesGet = asyncHandler(async (req, res) => {
+    console.log('before parse');
     parseRequestZod(GetCategoriesWithPagination, req);
+    console.log('after parse');
     const {lastCategoryId, fetchLimit} = req.query;
     const rows = await db.getCategories(lastCategoryId, fetchLimit);
     res.json(rows);
