@@ -6,7 +6,7 @@ import zodMiddleware from "./middlewares/zod-middleware.js";
 import shoeRouter from "./routes/shoe-routes.js";
 
 const corsOptions = {
-    origin: ['http://localhost:5173'],
+    origin: [process.env.CORS_ORIGIN],
 };
 
 const app = express();
