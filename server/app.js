@@ -13,15 +13,8 @@ const app = express();
 app.use(cors(corsOptions));
 app.use(express.urlencoded({extended: true}));
 app.use(express.json());
-
 app.use('/categories', categoriesRouter);
 app.use('/shoes', shoeRouter);
-
-
-app.get('/api', (req, res) => {
-    res.json([{name: "my name"}, {name: "second name"}]);
-});
-
 
 app.use(zodMiddleware);
 
