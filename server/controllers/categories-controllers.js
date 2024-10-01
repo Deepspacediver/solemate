@@ -13,6 +13,7 @@ export const categoriesGet = asyncHandler(async (req, res) => {
     console.log('after parse');
     const {lastCategoryId, fetchLimit} = req.query;
     const rows = await db.getCategories(lastCategoryId, fetchLimit);
+    console.log(rows);
     res.json(rows);
 });
 
